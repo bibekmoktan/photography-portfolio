@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { Geist, Geist_Mono } from 'next/font/google';
+import { Navbar, Footer } from '@/components/layout';
 import './globals.css';
 
 const geistSans = Geist({
@@ -13,14 +14,21 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: 'Photography Portfolio',
+  title: {
+    default: 'Prabin Kulung Rai Photography',
+    template: '%s | Prabin Kulung Rai Photography',
+  },
   description: 'Photography portfolio website',
 };
 
 export default function RootLayout({ children }: LayoutProps<'/'>) {
   return (
     <html lang="en" className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}>
-      <body className="flex min-h-full flex-col">{children}</body>
+      <body className="flex min-h-full flex-col">
+        <Navbar />
+        <main className="flex-1">{children}</main>
+        <Footer />
+      </body>
     </html>
   );
 }
