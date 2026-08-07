@@ -5,6 +5,7 @@ import { useState } from 'react';
 import Masonry, { ResponsiveMasonry } from 'react-responsive-masonry';
 import { Container } from '@/components/ui/container';
 import { PhotoViewer } from '@/components/story';
+import { getPhotoUrl } from '@/lib/photos';
 import { cn } from '@/lib/utils';
 
 const FILTERS = [
@@ -81,7 +82,7 @@ export function PortfolioGallery() {
                   style={{ height: item.height }}
                 >
                   <Image
-                    src={`https://picsum.photos/seed/${item.seed}/600/800`}
+                    src={getPhotoUrl(item.seed, 600, 800)}
                     alt={`Top work ${item.id + 1} — ${item.category}`}
                     fill
                     className="object-cover transition-opacity group-hover:opacity-90"
@@ -103,7 +104,7 @@ export function PortfolioGallery() {
         {openIndex !== null && (
           <PhotoViewer
             images={filteredItems.map((item) => ({
-              src: `https://picsum.photos/seed/${item.seed}/1200/1600`,
+              src: getPhotoUrl(item.seed, 1200, 1600),
               alt: `Top work ${item.id + 1} — ${item.category}`,
             }))}
             index={openIndex}

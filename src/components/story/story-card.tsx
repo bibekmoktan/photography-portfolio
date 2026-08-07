@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import type { Story } from '@/types/story';
+import { getPhotoUrl } from '@/lib/photos';
 import { CategoryTag } from './category-tag';
 
 export function StoryCard({ story }: { story: Story }) {
@@ -11,7 +12,7 @@ export function StoryCard({ story }: { story: Story }) {
         className="relative block aspect-[4/3] w-full overflow-hidden"
       >
         <Image
-          src={`https://picsum.photos/seed/${story.slug}/800/600`}
+          src={getPhotoUrl(story.slug, 800, 600)}
           alt={story.title}
           fill
           className="object-cover transition-opacity group-hover:opacity-90"

@@ -3,6 +3,7 @@
 import Image from 'next/image';
 import { useState } from 'react';
 import Masonry, { ResponsiveMasonry } from 'react-responsive-masonry';
+import { getPhotoUrl } from '@/lib/photos';
 import { PhotoViewer } from './photo-viewer';
 
 const TILE_HEIGHTS = [220, 300, 260, 340, 240, 280, 200, 320, 260, 300];
@@ -38,7 +39,7 @@ export function AlbumGallery({
               style={{ height: TILE_HEIGHTS[index % TILE_HEIGHTS.length] }}
             >
               <Image
-                src={`https://picsum.photos/seed/${tile.seed}/600/800`}
+                src={getPhotoUrl(tile.seed, 600, 800)}
                 alt={tile.alt}
                 fill
                 className="object-cover transition-opacity group-hover:opacity-90"
@@ -52,7 +53,7 @@ export function AlbumGallery({
       {openIndex !== null && (
         <PhotoViewer
           images={tiles.map((tile) => ({
-            src: `https://picsum.photos/seed/${tile.seed}/1200/1600`,
+            src: getPhotoUrl(tile.seed, 1200, 1600),
             alt: tile.alt,
           }))}
           index={openIndex}

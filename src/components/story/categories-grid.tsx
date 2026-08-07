@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import type { Album } from '@/types/album';
+import { getPhotoUrl } from '@/lib/photos';
 
 export function CategoriesGrid({ albums }: { albums: Album[] }) {
   return (
@@ -13,7 +14,7 @@ export function CategoriesGrid({ albums }: { albums: Album[] }) {
           >
             <div className="relative aspect-[4/5] w-full overflow-hidden">
               <Image
-                src={`https://picsum.photos/seed/${album.slug}/600/800`}
+                src={getPhotoUrl(album.slug, 600, 800)}
                 alt={album.title}
                 fill
                 className="object-cover transition-transform duration-300 group-hover:scale-110"
