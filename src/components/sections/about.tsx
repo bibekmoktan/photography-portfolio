@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import Link from 'next/link';
 import { Container } from '@/components/ui/container';
 import { SOCIAL_LINKS } from '@/lib/social-links';
@@ -11,7 +12,15 @@ export function About() {
         </div>
 
         <div className="mt-10 grid gap-10 md:grid-cols-2">
-          <div className="aspect-square w-full self-start bg-gray-200" />
+          <div className="relative aspect-square w-full self-start overflow-hidden bg-gray-200">
+            <Image
+              src="https://res.cloudinary.com/rigmojzn/image/upload/v1786128936/37f2e249-3cec-451a-9e58-f62b1009848b_n9lxyx.jpg"
+              alt="Prabin"
+              fill
+              className="object-cover"
+              sizes="(min-width: 768px) 50vw, 100vw"
+            />
+          </div>
 
           <div className="flex flex-col gap-8 self-center">
             <p className="text-sm leading-relaxed text-gray-600">
