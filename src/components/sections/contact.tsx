@@ -5,7 +5,7 @@ export function Contact() {
   return (
     <section
       id="contact"
-      className="border-t-2 border-b border-t-gray-900 border-b-gray-200 bg-white"
+      className="border-t-1 border-b-1 border-t-gray-200 border-b-gray-200 bg-white"
     >
       <Container className="grid gap-10 py-16 md:grid-cols-2 md:items-center md:py-24">
         <h2 className="font-serif text-4xl leading-tight text-gray-900 sm:text-5xl">

@@ -3,7 +3,7 @@ import { Container } from '@/components/ui/container';
 export function ProjectsHero() {
   return (
     <section className="bg-white">
-      <Container className="py-16 md:py-24">
+      <Container className="pt-16 md:pt-24">
         <div className="grid gap-10 md:grid-cols-[1fr_1px_1fr] md:items-center">
           <h1 className="font-serif text-4xl leading-tight text-gray-900 sm:text-5xl">
             Stories from

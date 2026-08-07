@@ -17,10 +17,7 @@ const nextConfig: NextConfig = {
   },
   images: {
     formats: ['image/avif', 'image/webp'],
-    remotePatterns: [
-      // Add allowed remote image hosts here, e.g.:
-      // { protocol: "https", hostname: "images.unsplash.com" },
-    ],
+    remotePatterns: [{ protocol: 'https', hostname: 'picsum.photos' }],
   },
   async headers() {
     return [

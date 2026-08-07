@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(curl -s http://localhost:3001/ -o /dev/null -w \"homepage: %{http_code}\\\\n\")",
+      "Bash(python3 -c \"import urllib.parse; print\\(urllib.parse.quote\\('https://picsum.photos/seed/wedding/600/800', safe=''\\)\\)\")",
+      "Bash(curl -s \"http://localhost:3001/_next/image?url=$\\(python3 -c \"import urllib.parse; print\\(urllib.parse.quote\\('https://picsum.photos/seed/wedding/600/800', safe=''\\)\\)\"\\)&w=640&q=75\" -o /tmp/claude-1000/-home-codilar-html-photography/91ead1d2-5789-4a4c-84df-cfb0255b6b8a/scratchpad/test.jpg -w \"%{http_code}\")"
+    ]
+  }
+}

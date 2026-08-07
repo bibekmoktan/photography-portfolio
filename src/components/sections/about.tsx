@@ -6,22 +6,14 @@ export function About() {
   return (
     <section id="about" className="bg-white">
       <Container className="py-16 md:py-24">
-        <div className="flex flex-wrap items-baseline justify-between gap-4 border-b border-gray-200 pb-8">
-          <h2 className="font-serif text-4xl text-gray-900 sm:text-5xl">About Prabin</h2>
-          <Link
-            href="#about"
-            className="flex items-center gap-1 text-sm font-medium text-gray-900 hover:text-gray-600"
-          >
-            <span aria-hidden>»</span> Know More About Me
-          </Link>
+        <div className="border-b border-gray-200 pb-8">
+          <h2 className="font-serif text-5xl text-gray-900 sm:text-6xl">About Prabin</h2>
         </div>
 
-        <div className="mt-10 flex flex-col gap-10 md:flex-row">
-          <div className="aspect-[4/5] w-full self-start rounded-lg bg-gray-200 md:w-2/5" />
+        <div className="mt-10 grid gap-10 md:grid-cols-2">
+          <div className="aspect-square w-full self-start bg-gray-200" />
 
-          <div className="hidden w-px self-stretch bg-gray-200 md:block" />
-
-          <div className="flex flex-1 flex-col gap-8 self-start">
+          <div className="flex flex-col gap-8 self-center">
             <p className="text-sm leading-relaxed text-gray-600">
               I am Prabin, an adventurer of light and shadow, weaving tales through my trusty camera
               lens. My journey as a photographer has been a lifelong quest to capture the
@@ -79,6 +71,13 @@ export function About() {
                 ))}
               </div>
             </div>
+
+            <Link
+              href="#about"
+              className="flex w-fit items-center gap-1 rounded-none bg-gray-900 px-6 py-3 text-sm font-medium text-white transition-colors hover:bg-gray-700"
+            >
+              <span aria-hidden>»</span> Know More About Me
+            </Link>
           </div>
         </div>
       </Container>

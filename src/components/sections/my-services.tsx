@@ -24,7 +24,7 @@ export function MyServices() {
           </div>
           <Link
             href="#services"
-            className="flex items-center gap-1 text-sm font-medium text-gray-900 hover:text-gray-600"
+            className="flex items-center gap-1 rounded-none bg-gray-900 px-6 py-3 text-sm font-medium text-white transition-colors hover:bg-gray-700"
           >
             <span aria-hidden>»</span> View All Services
           </Link>

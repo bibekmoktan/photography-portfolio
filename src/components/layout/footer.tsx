@@ -23,7 +23,7 @@ const FOOTER_COLUMNS = [
 
 export function Footer() {
   return (
-    <footer className="border-t border-gray-200 bg-white">
+    <footer className="bg-white">
       <Container className="py-16">
         <div className="flex flex-col gap-10 md:flex-row md:items-start">
           <div className="flex flex-col gap-6 md:w-56 md:shrink-0">

@@ -9,7 +9,6 @@ export { ServiceHero } from './service-hero';
 export { ServiceList } from './service-list';
 export { PortfolioHero } from './portfolio-hero';
 export { PortfolioGallery } from './portfolio-gallery';
-export { Gallery } from './gallery';
 export { ProjectsHero } from './projects-hero';
 export { ProjectsList } from './projects-list';
 export { AlbumsGrid } from './albums-grid';

@@ -1,5 +1,7 @@
 import type { Album } from '@/types/album';
 
+export const ALBUM_PHOTO_COUNT = 20;
+
 /**
  * Hardcoded for now, same async shape as stories.ts so this can later be
  * swapped for a CMS-backed implementation without touching call sites.
@@ -35,7 +37,7 @@ const ALBUMS: Album[] = [
   },
   {
     slug: 'everest-base-camp',
-    title: 'Everest Base Camp',
+    title: 'Mountains',
     description: 'A trek to the roof of the world, told through prayer flags, ice, and altitude.',
     images: [
       { alt: 'Prayer flags fluttering at base camp' },

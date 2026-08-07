@@ -1,4 +1,4 @@
-import { Hero, About, MyServices, AlbumsGrid, TravelStories, Contact } from '@/components/sections';
+import { Hero, About, MyServices, AlbumsGrid, TravelStories } from '@/components/sections';
 
 export default function Home() {
   return (
@@ -6,9 +6,8 @@ export default function Home() {
       <Hero />
       <About />
       <MyServices />
-      <AlbumsGrid />
+      <AlbumsGrid limit={6} />
       <TravelStories />
-      <Contact />
     </>
   );
 }

@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { PortfolioHero, PortfolioGallery, Gallery } from '@/components/sections';
+import { PortfolioHero, PortfolioGallery, AlbumsGrid, TravelStories } from '@/components/sections';
 
 export const metadata: Metadata = {
   title: 'Portfolio',
@@ -10,7 +10,8 @@ export default function PortfolioPage() {
     <>
       <PortfolioHero />
       <PortfolioGallery />
-      <Gallery />
+      <AlbumsGrid title="Explore the Collection" showViewAllButton={false} />
+      <TravelStories />
     </>
   );
 }
