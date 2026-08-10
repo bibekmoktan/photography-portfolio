@@ -1,13 +1,12 @@
+import Image from 'next/image';
 import Link from 'next/link';
 import { Container } from '@/components/ui/container';
+import { getServices } from '@/lib/services';
+import { urlForImage } from '@/lib/sanity/image';
 
-const SERVICES = [
-  { title: 'Portraits', description: 'Capturing the Essence of You' },
-  { title: 'Events', description: 'Preserving Moments, Creating Memories' },
-  { title: 'Commercial Photography', description: 'Visuals That Define Your Brand' },
-];
+export async function MyServices() {
+  const services = await getServices();
 
-export function MyServices() {
   return (
     <section id="services" className="bg-white">
       <Container className="py-16 md:py-24">
@@ -31,9 +30,19 @@ export function MyServices() {
         </div>
 
         <div className="mt-10 grid gap-10 md:grid-cols-3">
-          {SERVICES.map((service) => (
-            <div key={service.title} className="flex flex-col gap-4">
-              <div className="aspect-square w-full bg-gray-200" />
+          {services.map((service) => (
+            <div key={service._id} className="flex flex-col gap-4">
+              <div className="relative aspect-square w-full bg-gray-200">
+                {service.image?.asset && (
+                  <Image
+                    src={urlForImage(service.image).width(600).height(600).fit('crop').url()}
+                    alt={service.image.alt || service.title}
+                    fill
+                    className="object-cover"
+                    sizes="(min-width: 768px) 33vw, 100vw"
+                  />
+                )}
+              </div>
               <div className="flex items-center justify-between gap-4">
                 <h3 className="text-xl font-medium text-gray-900">{service.title}</h3>
                 <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-gray-900 text-white">
@@ -52,9 +61,13 @@ export function MyServices() {
                   </svg>
                 </span>
               </div>
-              <p className="text-sm text-gray-600">{service.description}</p>
+              <p className="text-sm text-gray-600">{service.shortDescription}</p>
             </div>
           ))}
+
+          {services.length === 0 && (
+            <p className="text-sm text-gray-500">No services listed yet.</p>
+          )}
         </div>
       </Container>
     </section>

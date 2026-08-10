@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { Geist, Geist_Mono } from 'next/font/google';
 import { Navbar, Footer } from '@/components/layout';
 import { Contact } from '@/components/sections';
+import { getSiteSettings } from '@/lib/site-settings';
 import './globals.css';
 
 const geistSans = Geist({
@@ -14,22 +15,28 @@ const geistMono = Geist_Mono({
   subsets: ['latin'],
 });
 
-export const metadata: Metadata = {
-  title: {
-    default: 'Prabin Kulung Rai Photography',
-    template: '%s | Prabin Kulung Rai Photography',
-  },
-  description: 'Photography portfolio website',
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const siteSettings = await getSiteSettings();
 
-export default function RootLayout({ children }: LayoutProps<'/'>) {
+  return {
+    title: {
+      default: siteSettings.siteTitle || 'Prabin Kulung Rai Photography',
+      template: siteSettings.titleTemplate || '%s | Prabin Kulung Rai Photography',
+    },
+    description: siteSettings.siteDescription || 'Photography portfolio website',
+  };
+}
+
+export default async function RootLayout({ children }: LayoutProps<'/'>) {
+  const siteSettings = await getSiteSettings();
+
   return (
     <html lang="en" className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}>
       <body className="flex min-h-full flex-col">
         <Navbar />
         <main className="flex-1">{children}</main>
-        <Contact />
-        <Footer />
+        <Contact siteSettings={siteSettings} />
+        <Footer siteSettings={siteSettings} />
       </body>
     </html>
   );

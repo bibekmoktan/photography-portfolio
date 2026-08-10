@@ -1,4 +1,6 @@
+import Image from 'next/image';
 import type { StoryHighlight } from '@/types/story';
+import { urlForImage } from '@/lib/sanity/image';
 import { CategoryTag } from './category-tag';
 
 export function HighlightBlock({ highlight }: { highlight: StoryHighlight }) {
@@ -15,7 +17,20 @@ export function HighlightBlock({ highlight }: { highlight: StoryHighlight }) {
       <p className="max-w-3xl text-sm leading-relaxed text-gray-600">{highlight.caption}</p>
       <div className="grid grid-cols-2 gap-4 sm:grid-cols-3">
         {highlight.images.map((image, index) => (
-          <div key={index} className="aspect-square w-full bg-gray-200" title={image.alt} />
+          <div
+            key={image.asset?._ref ?? index}
+            className="relative aspect-square w-full bg-gray-200"
+          >
+            {image.asset && (
+              <Image
+                src={urlForImage(image).width(600).height(600).fit('crop').url()}
+                alt={image.alt || highlight.title}
+                fill
+                className="object-cover"
+                sizes="(min-width: 640px) 33vw, 50vw"
+              />
+            )}
+          </div>
         ))}
       </div>
     </div>

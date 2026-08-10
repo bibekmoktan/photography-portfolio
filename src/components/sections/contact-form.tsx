@@ -2,17 +2,18 @@
 
 import { useState } from 'react';
 import { Container } from '@/components/ui/container';
-import { SOCIAL_LINKS } from '@/lib/social-links';
+import type { SiteSettings } from '@/types/site-settings';
+import { SOCIAL_ICON_PATHS } from '@/lib/social-links';
 
-const SERVICE_OPTIONS = [
-  'Portrait Photography',
-  'Event Photography',
-  'Commercial Photography',
-  'Other',
-];
-
-export function ContactForm() {
+export function ContactForm({
+  siteSettings,
+  serviceOptions,
+}: {
+  siteSettings: SiteSettings;
+  serviceOptions: string[];
+}) {
   const [submitted, setSubmitted] = useState(false);
+  const options = [...serviceOptions, 'Other'];
 
   return (
     <section className="bg-white">
@@ -23,8 +24,8 @@ export function ContactForm() {
               <div className="flex flex-col gap-2 rounded-md border border-gray-200 bg-gray-50 p-8">
                 <h2 className="font-serif text-2xl text-gray-900">Thanks for reaching out</h2>
                 <p className="text-sm leading-relaxed text-gray-600">
-                  Your message has been received. Prabin Kulung Rai will get back to you within 1–2
-                  business days.
+                  Your message has been received.
+                  {siteSettings.responseTimeNote ? ` ${siteSettings.responseTimeNote}` : ''}
                 </p>
               </div>
             ) : (
@@ -83,10 +84,10 @@ export function ContactForm() {
                     <select
                       id="service"
                       name="service"
-                      defaultValue={SERVICE_OPTIONS[0]}
+                      defaultValue={options[0]}
                       className="rounded-md border border-gray-300 px-4 py-2.5 text-sm text-gray-900 focus:border-gray-900 focus:outline-none"
                     >
-                      {SERVICE_OPTIONS.map((option) => (
+                      {options.map((option) => (
                         <option key={option} value={option}>
                           {option}
                         </option>
@@ -123,46 +124,57 @@ export function ContactForm() {
           <div className="flex flex-col gap-8">
             <div className="flex flex-col gap-2">
               <h3 className="text-sm font-semibold text-gray-900">Prefer to reach out directly?</h3>
-              <a
-                href="mailto:prabinkulungrai@gmail.com"
-                className="text-sm text-gray-600 hover:text-gray-900"
-              >
-                prabinkulungrai@gmail.com
-              </a>
-              <a href="tel:+15551234567" className="text-sm text-gray-600 hover:text-gray-900">
-                +1 (555) 123-4567
-              </a>
+              {siteSettings.email && (
+                <a
+                  href={`mailto:${siteSettings.email}`}
+                  className="text-sm text-gray-600 hover:text-gray-900"
+                >
+                  {siteSettings.email}
+                </a>
+              )}
+              {siteSettings.phone && (
+                <a
+                  href={`tel:${siteSettings.phone}`}
+                  className="text-sm text-gray-600 hover:text-gray-900"
+                >
+                  {siteSettings.phone}
+                </a>
+              )}
             </div>
 
-            <div className="flex flex-col gap-2 border-t border-gray-200 pt-6">
-              <h3 className="text-sm font-semibold text-gray-900">Based In</h3>
-              <p className="text-sm text-gray-600">USA — available for travel worldwide.</p>
-            </div>
-
-            <div className="flex flex-col gap-3 border-t border-gray-200 pt-6">
-              <h3 className="text-sm font-semibold text-gray-900">Social Media Links</h3>
-              <div className="flex gap-2">
-                {SOCIAL_LINKS.map((social) => (
-                  <a
-                    key={social.label}
-                    href={social.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label={social.label}
-                    className="flex h-9 w-9 items-center justify-center rounded-md border border-gray-300 text-gray-900 transition-colors hover:bg-gray-50"
-                  >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      viewBox="0 0 24 24"
-                      fill="currentColor"
-                      className="h-4 w-4"
-                    >
-                      <path d={social.path} />
-                    </svg>
-                  </a>
-                ))}
+            {siteSettings.basedInLabel && (
+              <div className="flex flex-col gap-2 border-t border-gray-200 pt-6">
+                <h3 className="text-sm font-semibold text-gray-900">Based In</h3>
+                <p className="text-sm text-gray-600">{siteSettings.basedInLabel}</p>
               </div>
-            </div>
+            )}
+
+            {siteSettings.socialLinks.length > 0 && (
+              <div className="flex flex-col gap-3 border-t border-gray-200 pt-6">
+                <h3 className="text-sm font-semibold text-gray-900">Social Media Links</h3>
+                <div className="flex gap-2">
+                  {siteSettings.socialLinks.map((social) => (
+                    <a
+                      key={social.platform}
+                      href={social.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label={social.platform}
+                      className="flex h-9 w-9 items-center justify-center rounded-md border border-gray-300 text-gray-900 transition-colors hover:bg-gray-50"
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 24 24"
+                        fill="currentColor"
+                        className="h-4 w-4"
+                      >
+                        <path d={SOCIAL_ICON_PATHS[social.platform]} />
+                      </svg>
+                    </a>
+                  ))}
+                </div>
+              </div>
+            )}
           </div>
         </div>
       </Container>

@@ -5,7 +5,8 @@ import { useState } from 'react';
 import Masonry, { ResponsiveMasonry } from 'react-responsive-masonry';
 import { Container } from '@/components/ui/container';
 import { PhotoViewer } from '@/components/story';
-import { getPhotoUrl } from '@/lib/photos';
+import type { PortfolioItem } from '@/types/portfolio-item';
+import { urlForImage } from '@/lib/sanity/image';
 import { cn } from '@/lib/utils';
 
 const FILTERS = [
@@ -21,23 +22,12 @@ const FILTERS = [
   'Nature',
 ];
 
-const TILE_HEIGHTS = [280, 340, 300, 260, 320, 240];
-
-const WORK_ITEMS = Array.from({ length: 20 }, (_, index) => ({
-  id: index,
-  seed: `top-work-${index}`,
-  category: FILTERS[(index % (FILTERS.length - 1)) + 1],
-  height: TILE_HEIGHTS[index % TILE_HEIGHTS.length],
-}));
-
-export function PortfolioGallery() {
+export function PortfolioGallery({ items }: { items: PortfolioItem[] }) {
   const [activeFilter, setActiveFilter] = useState('All');
   const [openIndex, setOpenIndex] = useState<number | null>(null);
 
   const filteredItems =
-    activeFilter === 'All'
-      ? WORK_ITEMS
-      : WORK_ITEMS.filter((item) => item.category === activeFilter);
+    activeFilter === 'All' ? items : items.filter((item) => item.category === activeFilter);
 
   return (
     <section className="bg-white">
@@ -74,20 +64,22 @@ export function PortfolioGallery() {
             <Masonry gutter="16px">
               {filteredItems.map((item, index) => (
                 <button
-                  key={item.id}
+                  key={item._id}
                   type="button"
                   onClick={() => setOpenIndex(index)}
-                  aria-label={`Open Top work ${item.id + 1} — ${item.category}`}
-                  className="group relative block w-full cursor-zoom-in overflow-hidden"
-                  style={{ height: item.height }}
+                  aria-label={`Open ${item.title ?? item.category}`}
+                  className="group relative block w-full cursor-zoom-in overflow-hidden bg-gray-200"
+                  style={{ aspectRatio: item.image?.aspectRatio ?? 3 / 4 }}
                 >
-                  <Image
-                    src={getPhotoUrl(item.seed, 600, 800)}
-                    alt={`Top work ${item.id + 1} — ${item.category}`}
-                    fill
-                    className="object-cover transition-opacity group-hover:opacity-90"
-                    sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
-                  />
+                  {item.image?.asset && (
+                    <Image
+                      src={urlForImage(item.image).width(600).url()}
+                      alt={item.image.alt || item.title || item.category}
+                      fill
+                      className="object-cover transition-opacity group-hover:opacity-90"
+                      sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+                    />
+                  )}
                   <div className="absolute inset-0 flex items-end bg-gradient-to-t from-black/60 via-transparent to-transparent p-4 opacity-0 transition-opacity group-hover:opacity-100">
                     <span className="text-sm font-semibold text-white">{item.category}</span>
                   </div>
@@ -104,8 +96,8 @@ export function PortfolioGallery() {
         {openIndex !== null && (
           <PhotoViewer
             images={filteredItems.map((item) => ({
-              src: getPhotoUrl(item.seed, 1200, 1600),
-              alt: `Top work ${item.id + 1} — ${item.category}`,
+              src: item.image ? urlForImage(item.image).width(1600).url() : '',
+              alt: item.image?.alt || item.title || item.category,
             }))}
             index={openIndex}
             onClose={() => setOpenIndex(null)}

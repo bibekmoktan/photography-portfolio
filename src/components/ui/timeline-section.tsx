@@ -1,9 +1,9 @@
 import { Container } from '@/components/ui/container';
 
 type TimelineItem = {
-  title: string;
-  meta: string;
-  description: string;
+  title?: string;
+  meta?: string;
+  description?: string;
 };
 
 type TimelineSectionProps = {
@@ -20,8 +20,8 @@ export function TimelineSection({ heading, description, items }: TimelineSection
         <p className="mt-4 max-w-3xl text-sm leading-relaxed text-gray-600">{description}</p>
 
         <div className="mt-10 border-t border-gray-200">
-          {items.map((item) => (
-            <div key={item.title} className="border-b border-gray-200">
+          {items.map((item, index) => (
+            <div key={item.title ?? index} className="border-b border-gray-200">
               <div className="grid gap-6 py-8 md:grid-cols-[1fr_1px_1fr] md:items-center">
                 <h3 className="font-serif text-2xl text-gray-900">{item.title}</h3>
                 <div className="hidden w-px self-stretch bg-gray-200 md:block" />

@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import type { Story } from '@/types/story';
-import { getPhotoUrl } from '@/lib/photos';
+import { urlForImage } from '@/lib/sanity/image';
 import { CategoryTag } from './category-tag';
 
 export function StoryCard({ story }: { story: Story }) {
@@ -9,15 +9,17 @@ export function StoryCard({ story }: { story: Story }) {
     <div className="group flex flex-col gap-4">
       <Link
         href={`/projects/${story.slug}`}
-        className="relative block aspect-[4/3] w-full overflow-hidden"
+        className="relative block aspect-[4/3] w-full overflow-hidden bg-gray-200"
       >
-        <Image
-          src={getPhotoUrl(story.slug, 800, 600)}
-          alt={story.title}
-          fill
-          className="object-cover transition-opacity group-hover:opacity-90"
-          sizes="(min-width: 640px) 50vw, 100vw"
-        />
+        {story.coverImage?.asset && (
+          <Image
+            src={urlForImage(story.coverImage).width(800).height(600).fit('crop').url()}
+            alt={story.coverImage.alt || story.title}
+            fill
+            className="object-cover transition-opacity group-hover:opacity-90"
+            sizes="(min-width: 640px) 50vw, 100vw"
+          />
+        )}
       </Link>
       <div className="flex flex-col gap-2">
         <span className="text-xs font-medium tracking-wide text-gray-500 uppercase">

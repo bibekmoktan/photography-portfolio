@@ -1,6 +1,10 @@
+import Image from 'next/image';
 import { Container } from '@/components/ui/container';
+import type { AboutPage } from '@/types/about-page';
+import { urlForImage } from '@/lib/sanity/image';
+import { Prose } from '@/lib/sanity/portable-text';
 
-export function AboutHero() {
+export function AboutHero({ aboutPage }: { aboutPage: AboutPage }) {
   return (
     <section className="bg-white">
       <Container className="py-16 md:py-24">
@@ -14,7 +18,21 @@ export function AboutHero() {
 
         <div className="mt-10 grid gap-10 md:grid-cols-[1fr_2fr]">
           <div className="flex flex-col gap-6">
-            <div className="aspect-square w-full bg-gray-200" />
+            <div className="relative aspect-square w-full bg-gray-200">
+              {aboutPage.portraitImage?.asset && (
+                <Image
+                  src={urlForImage(aboutPage.portraitImage)
+                    .width(600)
+                    .height(600)
+                    .fit('crop')
+                    .url()}
+                  alt={aboutPage.portraitImage.alt || 'Prabin Kulung Rai'}
+                  fill
+                  className="object-cover"
+                  sizes="(min-width: 768px) 33vw, 100vw"
+                />
+              )}
+            </div>
             <div>
               <p className="font-serif text-sm text-gray-500 italic">Biography of</p>
               <h2 className="font-serif text-2xl text-gray-900">Prabin Kulung Rai</h2>
@@ -28,22 +46,27 @@ export function AboutHero() {
             >
               P
             </span>
-            <div className="relative z-10 aspect-[3/4] w-3/5 bg-gray-200" />
+            <div className="relative z-10 aspect-[3/4] w-3/5 bg-gray-200">
+              {aboutPage.secondaryImage?.asset && (
+                <Image
+                  src={urlForImage(aboutPage.secondaryImage)
+                    .width(600)
+                    .height(800)
+                    .fit('crop')
+                    .url()}
+                  alt={aboutPage.secondaryImage.alt || 'Prabin Kulung Rai'}
+                  fill
+                  className="object-cover"
+                  sizes="(min-width: 768px) 33vw, 60vw"
+                />
+              )}
+            </div>
           </div>
         </div>
 
-        <p className="mt-10 max-w-4xl border-t border-gray-200 pt-10 text-sm leading-relaxed text-gray-600">
-          Prabin Kulung Rai&apos;s love affair with photography began at a young age, nurtured by
-          the captivating landscapes and vibrant cultures of the USA. A passion for storytelling
-          through images led to a photography journey spanning over 15 years. Driven by an
-          insatiable curiosity to explore the beauty in everyday moments, Prabin has honed the craft
-          meticulously. A background in digital media provided a solid foundation, but it&apos;s a
-          keen eye for detail and an innate ability to capture raw emotions that truly set the work
-          apart. Prabin&apos;s journey is more than just taking pictures; it&apos;s about capturing
-          the essence of the human spirit, the fleeting magic of nature, and the emotions that
-          define our lives. With each click of the camera, stories are woven that transcend time and
-          space.
-        </p>
+        <div className="mt-10 max-w-4xl border-t border-gray-200 pt-10">
+          <Prose value={aboutPage.bioLong} />
+        </div>
       </Container>
     </section>
   );

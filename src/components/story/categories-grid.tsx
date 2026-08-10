@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import type { Album } from '@/types/album';
-import { getPhotoUrl } from '@/lib/photos';
+import { urlForImage } from '@/lib/sanity/image';
 
 export function CategoriesGrid({ albums }: { albums: Album[] }) {
   return (
@@ -12,14 +12,16 @@ export function CategoriesGrid({ albums }: { albums: Album[] }) {
             href={`/projects/albums/${album.slug}`}
             className="block border border-gray-200 bg-white p-2 transition-shadow hover:shadow-md"
           >
-            <div className="relative aspect-[4/5] w-full overflow-hidden">
-              <Image
-                src={getPhotoUrl(album.slug, 600, 800)}
-                alt={album.title}
-                fill
-                className="object-cover transition-transform duration-300 group-hover:scale-110"
-                sizes="(min-width: 640px) 50vw, 100vw"
-              />
+            <div className="relative aspect-[4/5] w-full overflow-hidden bg-gray-200">
+              {album.coverImage?.asset && (
+                <Image
+                  src={urlForImage(album.coverImage).width(600).height(800).fit('crop').url()}
+                  alt={album.coverImage.alt || album.title}
+                  fill
+                  className="object-cover transition-transform duration-300 group-hover:scale-110"
+                  sizes="(min-width: 640px) 50vw, 100vw"
+                />
+              )}
             </div>
           </Link>
 

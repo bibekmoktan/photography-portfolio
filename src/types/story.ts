@@ -1,24 +1,23 @@
-export type Category = 'Wildlife' | 'Portraits' | 'Mountains' | 'Cultural';
-
-export type StoryImage = {
-  alt: string;
-  category: Category;
-};
+import type { PortableTextBlock } from '@portabletext/react';
+import type { Category } from './category';
+import type { SanityImageWithAlt } from './sanity-image';
 
 export type StoryHighlight = {
   slug: string;
   title: string;
-  caption: string;
+  caption?: string;
   categories: Category[];
-  images: StoryImage[];
+  images: SanityImageWithAlt[];
 };
 
 export type Story = {
+  _id: string;
   slug: string;
   title: string;
-  location: string;
-  summary: string;
-  narrative: string;
+  location?: string;
+  summary?: string;
+  narrative?: PortableTextBlock[];
+  coverImage?: SanityImageWithAlt;
   categories: Category[];
   highlights: StoryHighlight[];
 };

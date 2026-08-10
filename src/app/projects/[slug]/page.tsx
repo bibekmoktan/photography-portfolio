@@ -1,9 +1,12 @@
 import type { Metadata } from 'next';
+import Image from 'next/image';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { Container } from '@/components/ui/container';
 import { CategoryTag, HighlightBlock } from '@/components/story';
 import { getStories, getStoryBySlug } from '@/lib/stories';
+import { urlForImage } from '@/lib/sanity/image';
+import { Prose } from '@/lib/sanity/portable-text';
 
 export async function generateStaticParams() {
   const stories = await getStories();
@@ -51,11 +54,21 @@ export default async function StoryPage({ params }: PageProps<'/projects/[slug]'
             <p className="max-w-3xl text-sm leading-relaxed text-gray-600">{story.summary}</p>
           </div>
 
-          <div className="mt-10 aspect-[16/9] w-full bg-gray-200" />
+          <div className="relative mt-10 aspect-[16/9] w-full bg-gray-200">
+            {story.coverImage?.asset && (
+              <Image
+                src={urlForImage(story.coverImage).width(1600).height(900).fit('crop').url()}
+                alt={story.coverImage.alt || story.title}
+                fill
+                className="object-cover"
+                sizes="100vw"
+              />
+            )}
+          </div>
 
-          <p className="mt-10 max-w-3xl border-t border-gray-200 pt-10 text-sm leading-relaxed text-gray-600">
-            {story.narrative}
-          </p>
+          <div className="mt-10 max-w-3xl border-t border-gray-200 pt-10">
+            <Prose value={story.narrative} />
+          </div>
         </Container>
       </section>
 

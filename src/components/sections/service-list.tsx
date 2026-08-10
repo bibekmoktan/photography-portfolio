@@ -1,26 +1,13 @@
+import Image from 'next/image';
 import Link from 'next/link';
 import { Container } from '@/components/ui/container';
+import { getServices } from '@/lib/services';
+import { urlForImage } from '@/lib/sanity/image';
 import { cn } from '@/lib/utils';
 
-const SERVICES = [
-  {
-    title: 'Portrait Photography',
-    description:
-      'Our portrait photography service is a celebration of you. From individual sessions that capture your essence to family moments frozen in time and the love stories of couples, we specialize in creating portraits that resonate with emotion, personality, and connection.',
-  },
-  {
-    title: 'Event Photography',
-    description:
-      "Events are a tapestry of emotions and memories, and we're here to weave those stories. From the joy of weddings and the vibrancy of parties to the professionalism of corporate events, our event photography captures the essence of every occasion.",
-  },
-  {
-    title: 'Commercial Photography',
-    description:
-      'In the world of business, visual storytelling is paramount. Our commercial photography service encompasses product photography that enhances your brand, real estate photography that showcases properties at their best, and brand photography that tells your unique story to the world.',
-  },
-];
+export async function ServiceList() {
+  const services = await getServices();
 
-export function ServiceList() {
   return (
     <section className="bg-white">
       <Container className="py-16 md:py-24">
@@ -34,19 +21,29 @@ export function ServiceList() {
         </p>
 
         <div className="mt-10 flex flex-col divide-y divide-gray-200">
-          {SERVICES.map((service, index) => (
+          {services.map((service, index) => (
             <div
-              key={service.title}
+              key={service._id}
               className={cn(
                 'flex flex-col gap-10 py-12 md:flex-row md:items-center',
                 index % 2 === 1 && 'md:flex-row-reverse',
               )}
             >
-              <div className="aspect-[4/3] w-full bg-gray-200 md:w-1/2" />
+              <div className="relative aspect-[4/3] w-full bg-gray-200 md:w-1/2">
+                {service.image?.asset && (
+                  <Image
+                    src={urlForImage(service.image).width(800).height(600).fit('crop').url()}
+                    alt={service.image.alt || service.title}
+                    fill
+                    className="object-cover"
+                    sizes="(min-width: 768px) 50vw, 100vw"
+                  />
+                )}
+              </div>
 
               <div className="flex w-full flex-col gap-4 md:w-1/2">
                 <h3 className="font-serif text-2xl text-gray-900">{service.title}</h3>
-                <p className="text-sm leading-relaxed text-gray-600">{service.description}</p>
+                <p className="text-sm leading-relaxed text-gray-600">{service.longDescription}</p>
                 <div className="flex flex-wrap items-center gap-4 border-t border-gray-200 pt-4">
                   <Link
                     href="#"
@@ -64,6 +61,10 @@ export function ServiceList() {
               </div>
             </div>
           ))}
+
+          {services.length === 0 && (
+            <p className="py-12 text-sm text-gray-500">No services listed yet.</p>
+          )}
         </div>
       </Container>
     </section>

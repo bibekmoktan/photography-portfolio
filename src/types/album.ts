@@ -1,10 +1,10 @@
-export type AlbumImage = {
-  alt: string;
-};
+import type { SanityImageWithAlt } from './sanity-image';
 
 export type Album = {
+  _id: string;
   slug: string;
   title: string;
-  description: string;
-  images: AlbumImage[];
+  description?: string;
+  coverImage?: SanityImageWithAlt;
+  images: SanityImageWithAlt[];
 };

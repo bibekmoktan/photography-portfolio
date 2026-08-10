@@ -1,7 +1,8 @@
 import Link from 'next/link';
 import { Container } from '@/components/ui/container';
+import type { SiteSettings } from '@/types/site-settings';
 
-export function Contact() {
+export function Contact({ siteSettings }: { siteSettings: SiteSettings }) {
   return (
     <section
       id="contact"
@@ -30,25 +31,27 @@ export function Contact() {
               >
                 Go to Contact Page
               </Link>
-              <a
-                href="mailto:prabinkulungrai@gmail.com"
-                className="flex items-center gap-2 rounded-md border border-gray-300 px-6 py-3 text-sm font-medium text-gray-900 transition-colors hover:bg-gray-50"
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth={2}
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  className="h-4 w-4"
+              {siteSettings.email && (
+                <a
+                  href={`mailto:${siteSettings.email}`}
+                  className="flex items-center gap-2 rounded-md border border-gray-300 px-6 py-3 text-sm font-medium text-gray-900 transition-colors hover:bg-gray-50"
                 >
-                  <rect width="20" height="16" x="2" y="4" rx="2" />
-                  <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
-                </svg>
-                prabinkulungrai@gmail.com
-              </a>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth={2}
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    className="h-4 w-4"
+                  >
+                    <rect width="20" height="16" x="2" y="4" rx="2" />
+                    <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
+                  </svg>
+                  {siteSettings.email}
+                </a>
+              )}
             </div>
           </div>
         </div>

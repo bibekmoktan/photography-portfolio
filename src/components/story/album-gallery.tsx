@@ -3,44 +3,33 @@
 import Image from 'next/image';
 import { useState } from 'react';
 import Masonry, { ResponsiveMasonry } from 'react-responsive-masonry';
-import { getPhotoUrl } from '@/lib/photos';
+import type { SanityImageWithAlt } from '@/types/sanity-image';
+import { urlForImage } from '@/lib/sanity/image';
 import { PhotoViewer } from './photo-viewer';
 
-const TILE_HEIGHTS = [220, 300, 260, 340, 240, 280, 200, 320, 260, 300];
-
-export function AlbumGallery({
-  slug,
-  title,
-  count = 20,
-}: {
-  slug: string;
-  title: string;
-  count?: number;
-}) {
+export function AlbumGallery({ images, title }: { images: SanityImageWithAlt[]; title: string }) {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
 
-  const tiles = Array.from({ length: count }, (_, i) => ({
-    key: `${slug}-gallery-${i}`,
-    seed: `${slug}-gallery-${i}`,
-    alt: `${title} photo ${i + 1}`,
-  }));
+  if (images.length === 0) {
+    return <p className="text-sm text-gray-500">No photos in this album yet.</p>;
+  }
 
   return (
     <>
       <ResponsiveMasonry columnsCountBreakPoints={{ 0: 3 }}>
         <Masonry gutter="12px">
-          {tiles.map((tile, index) => (
+          {images.map((image, index) => (
             <button
-              key={tile.key}
+              key={image.asset?._ref ?? index}
               type="button"
               onClick={() => setOpenIndex(index)}
-              aria-label={`Open ${tile.alt}`}
+              aria-label={`Open ${image.alt || `${title} photo ${index + 1}`}`}
               className="group relative block w-full cursor-zoom-in overflow-hidden"
-              style={{ height: TILE_HEIGHTS[index % TILE_HEIGHTS.length] }}
+              style={{ aspectRatio: image.aspectRatio ?? 3 / 4 }}
             >
               <Image
-                src={getPhotoUrl(tile.seed, 600, 800)}
-                alt={tile.alt}
+                src={urlForImage(image).width(600).url()}
+                alt={image.alt || `${title} photo ${index + 1}`}
                 fill
                 className="object-cover transition-opacity group-hover:opacity-90"
                 sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
@@ -52,9 +41,9 @@ export function AlbumGallery({
 
       {openIndex !== null && (
         <PhotoViewer
-          images={tiles.map((tile) => ({
-            src: getPhotoUrl(tile.seed, 1200, 1600),
-            alt: tile.alt,
+          images={images.map((image, index) => ({
+            src: urlForImage(image).width(1600).url(),
+            alt: image.alt || `${title} photo ${index + 1}`,
           }))}
           index={openIndex}
           onClose={() => setOpenIndex(null)}
