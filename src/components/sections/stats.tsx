@@ -8,16 +8,17 @@ const DEFAULT_DESCRIPTION =
   "Get a snapshot of Prabin's experience with key statistics, including years in the business, satisfied clients, and photography awards.";
 
 export function Stats({ aboutPage }: { aboutPage: AboutPage }) {
-  const stats = aboutPage.stats;
+  const statsSection = aboutPage.statsSection;
+  const stats = statsSection?.stats ?? [];
 
   return (
     <section className="bg-white">
       <Container className="py-16 md:py-24">
         <TypewriterHeading as="h2" className="font-serif text-4xl text-gray-900 sm:text-5xl">
-          {aboutPage.statsHeading || DEFAULT_HEADING}
+          {statsSection?.heading || DEFAULT_HEADING}
         </TypewriterHeading>
         <p className="mt-4 max-w-2xl text-sm leading-relaxed text-gray-600">
-          {aboutPage.statsDescription || DEFAULT_DESCRIPTION}
+          {statsSection?.description || DEFAULT_DESCRIPTION}
         </p>
 
         {stats.length > 0 && (

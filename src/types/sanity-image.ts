@@ -13,3 +13,13 @@ export type SanityImageWithAlt = {
   category?: Category[];
   aspectRatio?: number;
 };
+
+/**
+ * Lean `{ asset, alt }` image used by the homePage/aboutPage section
+ * objects — no hotspot, category, or aspect ratio, unlike the richer
+ * `imageWithAlt` type used by album/story/service/portfolioItem.
+ */
+export type SanityImage = {
+  asset?: { _ref: string; _type: 'reference' };
+  alt?: string;
+};

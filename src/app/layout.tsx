@@ -3,7 +3,6 @@ import { Geist, Geist_Mono } from 'next/font/google';
 import { Navbar, Footer } from '@/components/layout';
 import { Contact } from '@/components/sections';
 import { SmoothScroll } from '@/components/providers/smooth-scroll';
-import { getSiteSettings } from '@/lib/site-settings';
 import './globals.css';
 
 const geistSans = Geist({
@@ -16,29 +15,23 @@ const geistMono = Geist_Mono({
   subsets: ['latin'],
 });
 
-export async function generateMetadata(): Promise<Metadata> {
-  const siteSettings = await getSiteSettings();
+export const metadata: Metadata = {
+  title: {
+    default: 'Prabin Kulung Rai Photography',
+    template: '%s | Prabin Kulung Rai Photography',
+  },
+  description: 'Photography portfolio website',
+};
 
-  return {
-    title: {
-      default: siteSettings.siteTitle || 'Prabin Kulung Rai Photography',
-      template: siteSettings.titleTemplate || '%s | Prabin Kulung Rai Photography',
-    },
-    description: siteSettings.siteDescription || 'Photography portfolio website',
-  };
-}
-
-export default async function RootLayout({ children }: LayoutProps<'/'>) {
-  const siteSettings = await getSiteSettings();
-
+export default function RootLayout({ children }: LayoutProps<'/'>) {
   return (
     <html lang="en" className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}>
       <body className="flex min-h-full flex-col">
         <SmoothScroll />
         <Navbar />
         <main className="flex-1">{children}</main>
-        <Contact siteSettings={siteSettings} />
-        <Footer siteSettings={siteSettings} />
+        <Contact />
+        <Footer />
       </body>
     </html>
   );

@@ -1,9 +1,9 @@
 import type { PortableTextBlock } from '@portabletext/react';
-import type { SanityImageWithAlt } from './sanity-image';
+import type { SanityImage } from './sanity-image';
 
 export type TimelineItem = {
   title?: string;
-  meta?: string;
+  year?: string;
   description?: string;
 };
 
@@ -13,17 +13,29 @@ export type Stat = {
 };
 
 export type AboutPage = {
-  bioShort?: string;
-  bioLong?: PortableTextBlock[];
-  portraitImage?: SanityImageWithAlt;
-  secondaryImage?: SanityImageWithAlt;
-  journeyHeading?: string;
-  journeyDescription?: string;
-  journeyItems: TimelineItem[];
-  awardsHeading?: string;
-  awardsDescription?: string;
-  awardItems: TimelineItem[];
-  statsHeading?: string;
-  statsDescription?: string;
-  stats: Stat[];
+  heroSection?: {
+    heading?: string;
+    subheading?: string;
+    image?: SanityImage;
+  };
+  bioSection?: {
+    heading?: string;
+    bio?: PortableTextBlock[];
+    image?: SanityImage;
+  };
+  journeySection?: {
+    heading?: string;
+    description?: string;
+    items: TimelineItem[];
+  };
+  awardsSection?: {
+    heading?: string;
+    description?: string;
+    items: TimelineItem[];
+  };
+  statsSection?: {
+    heading?: string;
+    description?: string;
+    stats: Stat[];
+  };
 };

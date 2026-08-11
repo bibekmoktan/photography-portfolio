@@ -3,16 +3,16 @@
 import { useState } from 'react';
 import { Container } from '@/components/ui/container';
 import { TypewriterHeading } from '@/components/ui/typewriter-heading';
-import type { SiteSettings } from '@/types/site-settings';
 import { SOCIAL_ICON_PATHS } from '@/lib/social-links';
+import {
+  CONTACT_EMAIL,
+  CONTACT_PHONE,
+  BASED_IN_LABEL,
+  RESPONSE_TIME_NOTE,
+  SOCIAL_LINKS,
+} from '@/lib/contact-info';
 
-export function ContactForm({
-  siteSettings,
-  serviceOptions,
-}: {
-  siteSettings: SiteSettings;
-  serviceOptions: string[];
-}) {
+export function ContactForm({ serviceOptions }: { serviceOptions: string[] }) {
   const [submitted, setSubmitted] = useState(false);
   const options = [...serviceOptions, 'Other'];
 
@@ -26,10 +26,7 @@ export function ContactForm({
                 <TypewriterHeading as="h2" className="font-serif text-2xl text-gray-900">
                   Thanks for reaching out
                 </TypewriterHeading>
-                <p className="text-sm leading-relaxed text-gray-600">
-                  Your message has been received.
-                  {siteSettings.responseTimeNote ? ` ${siteSettings.responseTimeNote}` : ''}
-                </p>
+                <p className="text-sm leading-relaxed text-gray-600">{RESPONSE_TIME_NOTE}</p>
               </div>
             ) : (
               <form
@@ -127,57 +124,49 @@ export function ContactForm({
           <div className="flex flex-col gap-8">
             <div className="flex flex-col gap-2">
               <h3 className="text-sm font-semibold text-gray-900">Prefer to reach out directly?</h3>
-              {siteSettings.email && (
-                <a
-                  href={`mailto:${siteSettings.email}`}
-                  className="text-sm text-gray-600 hover:text-gray-900"
-                >
-                  {siteSettings.email}
-                </a>
-              )}
-              {siteSettings.phone && (
-                <a
-                  href={`tel:${siteSettings.phone}`}
-                  className="text-sm text-gray-600 hover:text-gray-900"
-                >
-                  {siteSettings.phone}
-                </a>
-              )}
+              <a
+                href={`mailto:${CONTACT_EMAIL}`}
+                className="text-sm text-gray-600 hover:text-gray-900"
+              >
+                {CONTACT_EMAIL}
+              </a>
+              <a
+                href={`tel:${CONTACT_PHONE}`}
+                className="text-sm text-gray-600 hover:text-gray-900"
+              >
+                {CONTACT_PHONE}
+              </a>
             </div>
 
-            {siteSettings.basedInLabel && (
-              <div className="flex flex-col gap-2 border-t border-gray-200 pt-6">
-                <h3 className="text-sm font-semibold text-gray-900">Based In</h3>
-                <p className="text-sm text-gray-600">{siteSettings.basedInLabel}</p>
-              </div>
-            )}
+            <div className="flex flex-col gap-2 border-t border-gray-200 pt-6">
+              <h3 className="text-sm font-semibold text-gray-900">Based In</h3>
+              <p className="text-sm text-gray-600">{BASED_IN_LABEL}</p>
+            </div>
 
-            {siteSettings.socialLinks.length > 0 && (
-              <div className="flex flex-col gap-3 border-t border-gray-200 pt-6">
-                <h3 className="text-sm font-semibold text-gray-900">Social Media Links</h3>
-                <div className="flex gap-2">
-                  {siteSettings.socialLinks.map((social) => (
-                    <a
-                      key={social.platform}
-                      href={social.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      aria-label={social.platform}
-                      className="flex h-9 w-9 items-center justify-center rounded-md border border-gray-300 text-gray-900 transition-colors hover:bg-gray-50"
+            <div className="flex flex-col gap-3 border-t border-gray-200 pt-6">
+              <h3 className="text-sm font-semibold text-gray-900">Social Media Links</h3>
+              <div className="flex gap-2">
+                {SOCIAL_LINKS.map((social) => (
+                  <a
+                    key={social.platform}
+                    href={social.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={social.platform}
+                    className="flex h-9 w-9 items-center justify-center rounded-md border border-gray-300 text-gray-900 transition-colors hover:bg-gray-50"
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 24 24"
+                      fill="currentColor"
+                      className="h-4 w-4"
                     >
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        viewBox="0 0 24 24"
-                        fill="currentColor"
-                        className="h-4 w-4"
-                      >
-                        <path d={SOCIAL_ICON_PATHS[social.platform]} />
-                      </svg>
-                    </a>
-                  ))}
-                </div>
+                      <path d={SOCIAL_ICON_PATHS[social.platform]} />
+                    </svg>
+                  </a>
+                ))}
               </div>
-            )}
+            </div>
           </div>
         </div>
       </Container>

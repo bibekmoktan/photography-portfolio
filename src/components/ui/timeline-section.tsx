@@ -2,7 +2,7 @@ import { Container } from '@/components/ui/container';
 
 type TimelineItem = {
   title?: string;
-  meta?: string;
+  year?: string;
   description?: string;
 };
 
@@ -25,7 +25,7 @@ export function TimelineSection({ heading, description, items }: TimelineSection
               <div className="grid gap-6 py-8 md:grid-cols-[1fr_1px_1fr] md:items-center">
                 <h3 className="font-serif text-2xl text-gray-900">{item.title}</h3>
                 <div className="hidden w-px self-stretch bg-gray-200 md:block" />
-                <p className="text-lg text-gray-700">{item.meta}</p>
+                <p className="text-lg text-gray-700">{item.year}</p>
               </div>
               <p className="bg-gray-50 px-4 py-6 text-sm leading-relaxed text-gray-600 md:px-6">
                 {item.description}

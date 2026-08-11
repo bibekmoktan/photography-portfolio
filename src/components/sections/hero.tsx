@@ -6,35 +6,22 @@ import { TypewriterHeading } from '@/components/ui/typewriter-heading';
 import type { HomePage } from '@/types/home-page';
 
 const DEFAULT_HEADING = 'Photography by Prabin Kulung Rai';
+const DEFAULT_SUBHEADING =
+  "Welcome to Prabin Kulung Rai's world of photography, where moments are not just captured but transformed into timeless memories. With a keen eye for detail and a passion for storytelling, Prabin has been crafting visual narratives for years. The lens unveils the beauty in the ordinary and transforms the extraordinary into sheer artistry.";
 const DEFAULT_CTA_LABEL = "Explore Prabin's Portfolio";
 
-/** Verified-reachable Unsplash photos shown until real banner/secondary images are set in Sanity. */
-const BANNER_FALLBACK_IDS = [
-  '1519085360753-af0119f7cbe7',
-  '1441716844725-09cedc13a4e7',
-  '1506905925346-21bda4d32df4',
-  '1447752875215-b2761acb3c5d',
+/** Verified-reachable Unsplash photos shown until a hero image is set in Sanity. */
+const BANNER_FALLBACK_IMAGES = [
+  'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=1600&h=450&fit=crop&auto=format&q=80',
 ];
-const SECONDARY_FALLBACK_IDS = [
-  '1472214103451-9374bd1c798e',
-  '1426604966848-d7adac402bff',
-  '1501594907352-04cda38ebc29',
-  '1483728642387-6c3bdd6c93e5',
+const SECONDARY_FALLBACK_IMAGES = [
+  'https://images.unsplash.com/photo-1472214103451-9374bd1c798e?w=1200&h=675&fit=crop&auto=format&q=80',
 ];
-const BANNER_FALLBACK_IMAGES = BANNER_FALLBACK_IDS.map(
-  (id) => `https://images.unsplash.com/photo-${id}?w=1600&h=450&fit=crop&auto=format&q=80`,
-);
-const SECONDARY_FALLBACK_IMAGES = SECONDARY_FALLBACK_IDS.map(
-  (id) => `https://images.unsplash.com/photo-${id}?w=1200&h=675&fit=crop&auto=format&q=80`,
-);
-
-function buildIntro(heroIntro: string | undefined, yearsExperience: number | undefined) {
-  if (heroIntro) return heroIntro;
-  const years = yearsExperience ? `${yearsExperience} years` : 'many years';
-  return `Welcome to Prabin Kulung Rai's world of photography, where moments are not just captured but transformed into timeless memories. With a keen eye for detail and a passion for storytelling, Prabin has been crafting visual narratives for ${years}. The lens unveils the beauty in the ordinary and transforms the extraordinary into sheer artistry.`;
-}
 
 export function Hero({ homePage }: { homePage: HomePage }) {
+  const hero = homePage.heroSection;
+  const heroImages = hero?.image?.asset ? [hero.image] : [];
+
   return (
     <section id="home" className="bg-white">
       <Container className="py-16 md:py-24">
@@ -43,13 +30,13 @@ export function Hero({ homePage }: { homePage: HomePage }) {
             as="h1"
             className="font-serif text-4xl leading-tight text-gray-900 sm:text-5xl md:text-6xl"
           >
-            {homePage.heroHeading || DEFAULT_HEADING}
+            {hero?.heading || DEFAULT_HEADING}
           </TypewriterHeading>
 
           <div className="flex flex-col gap-6 md:items-end">
             <div className="group relative aspect-[32/9] w-full overflow-hidden bg-gray-200">
               <ImageSlider
-                images={homePage.bannerImages}
+                images={heroImages}
                 width={1600}
                 height={450}
                 sizes="100vw"
@@ -79,7 +66,7 @@ export function Hero({ homePage }: { homePage: HomePage }) {
             </div>
             <Reveal delay={0.2} className="w-full">
               <p className="text-sm leading-relaxed text-gray-600">
-                {buildIntro(homePage.heroIntro, homePage.yearsExperience)}
+                {hero?.subheading || DEFAULT_SUBHEADING}
               </p>
             </Reveal>
           </div>
@@ -91,7 +78,7 @@ export function Hero({ homePage }: { homePage: HomePage }) {
         >
           <div className="group relative mt-8 aspect-[16/9] w-full overflow-hidden bg-gray-200">
             <ImageSlider
-              images={homePage.secondaryImages}
+              images={heroImages}
               width={1200}
               height={675}
               sizes="(min-width: 768px) 60vw, 100vw"
@@ -108,7 +95,7 @@ export function Hero({ homePage }: { homePage: HomePage }) {
               href="/portfolio"
               className="rounded-none bg-gray-900 px-6 py-3 text-sm font-medium text-white transition-all duration-300 hover:-translate-y-0.5 hover:bg-gray-700 hover:shadow-lg active:translate-y-0 active:scale-95"
             >
-              {homePage.heroCtaLabel || DEFAULT_CTA_LABEL}
+              {hero?.ctaLabel || DEFAULT_CTA_LABEL}
             </Link>
           </div>
         </Reveal>

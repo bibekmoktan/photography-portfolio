@@ -1,10 +1,26 @@
-import type { SanityImageWithAlt } from './sanity-image';
+import type { SanityImage } from './sanity-image';
+
+export type HomePageFeature = {
+  title?: string;
+  description?: string;
+  image?: SanityImage;
+};
 
 export type HomePage = {
-  heroHeading?: string;
-  heroIntro?: string;
-  yearsExperience?: number;
-  heroCtaLabel?: string;
-  bannerImages: SanityImageWithAlt[];
-  secondaryImages: SanityImageWithAlt[];
+  heroSection?: {
+    heading?: string;
+    subheading?: string;
+    ctaLabel?: string;
+    image?: SanityImage;
+  };
+  aboutSection?: {
+    heading?: string;
+    bio?: string;
+    image?: SanityImage;
+  };
+  featureSection?: {
+    heading?: string;
+    description?: string;
+    features: HomePageFeature[];
+  };
 };

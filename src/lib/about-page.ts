@@ -1,36 +1,27 @@
 import type { AboutPage } from '@/types/about-page';
 import { sanityFetch } from '@/lib/sanity/client';
-import { IMAGE_PROJECTION } from '@/lib/sanity/fragments';
 
 const EMPTY_ABOUT_PAGE: AboutPage = {
-  journeyItems: [],
-  awardItems: [],
-  stats: [],
+  journeySection: { items: [] },
+  awardsSection: { items: [] },
+  statsSection: { stats: [] },
 };
 
 export async function getAboutPage(): Promise<AboutPage> {
   const aboutPage = await sanityFetch<AboutPage | null>(
     `*[_type == "aboutPage" && _id == "aboutPage"][0]{
-      bioShort,
-      bioLong,
-      "portraitImage": portraitImage${IMAGE_PROJECTION},
-      "secondaryImage": secondaryImage${IMAGE_PROJECTION},
-      journeyHeading,
-      journeyDescription,
-      "journeyItems": journeyItems[]{ title, meta, description },
-      awardsHeading,
-      awardsDescription,
-      "awardItems": awardItems[]{ title, meta, description },
-      statsHeading,
-      statsDescription,
-      "stats": stats[]{ value, label }
+      heroSection{heading, subheading, image{asset, alt}},
+      bioSection{heading, bio, image{asset, alt}},
+      journeySection{heading, description, items[]{title, year, description}},
+      awardsSection{heading, description, items[]{title, year, description}},
+      statsSection{heading, description, stats[]{value, label}}
     }`,
   );
   if (!aboutPage) return EMPTY_ABOUT_PAGE;
   return {
     ...aboutPage,
-    journeyItems: aboutPage.journeyItems ?? [],
-    awardItems: aboutPage.awardItems ?? [],
-    stats: aboutPage.stats ?? [],
+    journeySection: { ...aboutPage.journeySection, items: aboutPage.journeySection?.items ?? [] },
+    awardsSection: { ...aboutPage.awardsSection, items: aboutPage.awardsSection?.items ?? [] },
+    statsSection: { ...aboutPage.statsSection, stats: aboutPage.statsSection?.stats ?? [] },
   };
 }

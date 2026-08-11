@@ -1,6 +1,5 @@
 import type { Metadata } from 'next';
 import { ContactHero, ContactForm } from '@/components/sections';
-import { getSiteSettings } from '@/lib/site-settings';
 import { getServices } from '@/lib/services';
 
 export const metadata: Metadata = {
@@ -8,15 +7,12 @@ export const metadata: Metadata = {
 };
 
 export default async function ContactPage() {
-  const [siteSettings, services] = await Promise.all([getSiteSettings(), getServices()]);
+  const services = await getServices();
 
   return (
     <>
       <ContactHero />
-      <ContactForm
-        siteSettings={siteSettings}
-        serviceOptions={services.map((service) => service.title)}
-      />
+      <ContactForm serviceOptions={services.map((service) => service.title)} />
     </>
   );
 }

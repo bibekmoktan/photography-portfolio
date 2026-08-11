@@ -1,49 +1,9 @@
 import Link from 'next/link';
 import { Container } from '@/components/ui/container';
-import type { SiteSettings, FooterColumn } from '@/types/site-settings';
+import { FOOTER_COLUMNS, SOCIAL_LINKS } from '@/lib/contact-info';
 import { SOCIAL_ICON_PATHS } from '@/lib/social-links';
 
-const DEFAULT_FOOTER_COLUMNS: FooterColumn[] = [
-  {
-    title: 'Home',
-    links: [
-      { label: 'About Me', href: '#' },
-      { label: 'My Services', href: '#' },
-      { label: 'My Portfolio', href: '#' },
-    ],
-  },
-  {
-    title: 'About Me',
-    links: [
-      { label: 'My Intro', href: '#' },
-      { label: 'My Features', href: '#' },
-      { label: 'Benefits', href: '#' },
-      { label: 'Testimonials', href: '#' },
-      { label: 'My Stats', href: '#' },
-    ],
-  },
-  {
-    title: 'Portfolio',
-    links: [
-      { label: 'Projects', href: '#' },
-      { label: 'Gallery', href: '#' },
-      { label: 'Collaborations', href: '#' },
-    ],
-  },
-  {
-    title: 'Services',
-    links: [
-      { label: 'Portraits Photography', href: '#' },
-      { label: 'Events Photography', href: '#' },
-      { label: 'Commercial Photography', href: '#' },
-    ],
-  },
-];
-
-export function Footer({ siteSettings }: { siteSettings: SiteSettings }) {
-  const footerColumns =
-    siteSettings.footerColumns.length > 0 ? siteSettings.footerColumns : DEFAULT_FOOTER_COLUMNS;
-
+export function Footer() {
   return (
     <footer className="bg-white">
       <Container className="py-16">
@@ -53,7 +13,7 @@ export function Footer({ siteSettings }: { siteSettings: SiteSettings }) {
               Prabin Kulung Rai
             </Link>
             <div className="flex gap-2">
-              {siteSettings.socialLinks.map((social) => (
+              {SOCIAL_LINKS.map((social) => (
                 <a
                   key={social.platform}
                   href={social.url}
@@ -78,7 +38,7 @@ export function Footer({ siteSettings }: { siteSettings: SiteSettings }) {
           <div className="hidden w-px self-stretch bg-gray-200 md:block" />
 
           <div className="grid flex-1 grid-cols-2 gap-8 sm:grid-cols-4">
-            {footerColumns.map((column) => (
+            {FOOTER_COLUMNS.map((column) => (
               <div key={column.title} className="flex flex-col gap-3">
                 <h3 className="text-sm font-semibold text-gray-900">{column.title}</h3>
                 <ul className="flex flex-col gap-2">
