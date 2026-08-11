@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { Container } from '@/components/ui/container';
+import { TypewriterHeading } from '@/components/ui/typewriter-heading';
 import { getServices } from '@/lib/services';
 import { urlForImage } from '@/lib/sanity/image';
 import { cn } from '@/lib/utils';
@@ -11,9 +12,9 @@ export async function ServiceList() {
   return (
     <section className="bg-white">
       <Container className="py-16 md:py-24">
-        <h2 className="font-serif text-4xl text-gray-900 sm:text-5xl">
-          Explore Prabin&apos;s Services
-        </h2>
+        <TypewriterHeading as="h2" className="font-serif text-4xl text-gray-900 sm:text-5xl">
+          {"Explore Prabin's Services"}
+        </TypewriterHeading>
         <p className="mt-4 max-w-3xl text-sm leading-relaxed text-gray-600">
           Explore a curated selection of Prabin Kulung Rai&apos;s finest photography work. Each
           project is a visual journey, a story captured through the lens. Click on the titles to

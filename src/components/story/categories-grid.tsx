@@ -33,7 +33,7 @@ export function CategoriesGrid({ albums }: { albums: Album[] }) {
             </div>
             <Link
               href={`/projects/albums/${album.slug}`}
-              className="flex items-center gap-1 text-xs font-medium tracking-wide text-gray-900 uppercase"
+              className="group/link flex items-center gap-1 text-xs font-medium tracking-wide text-gray-900 uppercase"
             >
               View Collection
               <svg
@@ -44,7 +44,7 @@ export function CategoriesGrid({ albums }: { albums: Album[] }) {
                 strokeWidth={2}
                 strokeLinecap="round"
                 strokeLinejoin="round"
-                className="h-4 w-4"
+                className="h-4 w-4 transition-transform duration-300 group-hover/link:translate-x-1"
               >
                 <path d="M7 17 17 7" />
                 <path d="M7 7h10v10" />

@@ -1,4 +1,5 @@
 import { Container } from '@/components/ui/container';
+import { TypewriterHeading } from '@/components/ui/typewriter-heading';
 import type { AboutPage } from '@/types/about-page';
 import { cn } from '@/lib/utils';
 
@@ -12,9 +13,9 @@ export function Stats({ aboutPage }: { aboutPage: AboutPage }) {
   return (
     <section className="bg-white">
       <Container className="py-16 md:py-24">
-        <h2 className="font-serif text-4xl text-gray-900 sm:text-5xl">
+        <TypewriterHeading as="h2" className="font-serif text-4xl text-gray-900 sm:text-5xl">
           {aboutPage.statsHeading || DEFAULT_HEADING}
-        </h2>
+        </TypewriterHeading>
         <p className="mt-4 max-w-2xl text-sm leading-relaxed text-gray-600">
           {aboutPage.statsDescription || DEFAULT_DESCRIPTION}
         </p>

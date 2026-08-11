@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import { Container } from '@/components/ui/container';
+import { TypewriterHeading } from '@/components/ui/typewriter-heading';
 import type { AboutPage } from '@/types/about-page';
 import { urlForImage } from '@/lib/sanity/image';
 import { Prose } from '@/lib/sanity/portable-text';
@@ -9,7 +10,9 @@ export function AboutHero({ aboutPage }: { aboutPage: AboutPage }) {
     <section className="bg-white">
       <Container className="py-16 md:py-24">
         <div className="flex flex-wrap items-start justify-between gap-6 border-b border-gray-200 pb-8">
-          <h1 className="font-serif text-4xl text-gray-900 sm:text-5xl">About Prabin Kulung Rai</h1>
+          <TypewriterHeading as="h1" className="font-serif text-4xl text-gray-900 sm:text-5xl">
+            About Prabin Kulung Rai
+          </TypewriterHeading>
           <p className="max-w-sm text-sm leading-relaxed text-gray-600">
             Get to know the visionary behind the lens, Prabin Kulung Rai, and the remarkable journey
             through the world of photography.
@@ -35,7 +38,9 @@ export function AboutHero({ aboutPage }: { aboutPage: AboutPage }) {
             </div>
             <div>
               <p className="font-serif text-sm text-gray-500 italic">Biography of</p>
-              <h2 className="font-serif text-2xl text-gray-900">Prabin Kulung Rai</h2>
+              <TypewriterHeading as="h2" className="font-serif text-2xl text-gray-900">
+                Prabin Kulung Rai
+              </TypewriterHeading>
             </div>
           </div>
 

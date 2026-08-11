@@ -16,7 +16,7 @@ export function StoryCard({ story }: { story: Story }) {
             src={urlForImage(story.coverImage).width(800).height(600).fit('crop').url()}
             alt={story.coverImage.alt || story.title}
             fill
-            className="object-cover transition-opacity group-hover:opacity-90"
+            className="object-cover transition-all duration-500 group-hover:scale-105 group-hover:opacity-90"
             sizes="(min-width: 640px) 50vw, 100vw"
           />
         )}
@@ -35,7 +35,7 @@ export function StoryCard({ story }: { story: Story }) {
           </div>
           <Link
             href={`/projects/${story.slug}`}
-            className="flex w-fit items-center gap-1 border border-gray-300 px-3 py-1.5 pr-4 text-[12px] font-medium tracking-wide text-gray-900 uppercase transition-colors hover:bg-gray-50"
+            className="group/link flex w-fit items-center gap-1 border border-gray-300 px-3 py-1.5 pr-4 text-[12px] font-medium tracking-wide text-gray-900 uppercase transition-colors hover:bg-gray-50"
           >
             View Story
             <svg
@@ -46,7 +46,7 @@ export function StoryCard({ story }: { story: Story }) {
               strokeWidth={2}
               strokeLinecap="round"
               strokeLinejoin="round"
-              className="h-4 w-4"
+              className="h-4 w-4 transition-transform duration-300 group-hover/link:translate-x-1"
             >
               <path d="M7 17 17 7" />
               <path d="M7 7h10v10" />

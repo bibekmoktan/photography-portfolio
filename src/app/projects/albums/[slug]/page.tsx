@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { Container } from '@/components/ui/container';
+import { TypewriterHeading } from '@/components/ui/typewriter-heading';
 import { AlbumGallery } from '@/components/story';
 import { getAlbumBySlug, getAlbums } from '@/lib/albums';
 
@@ -37,7 +38,9 @@ export default async function AlbumPage({ params }: PageProps<'/projects/albums/
           <span aria-hidden>«</span> All Stories
         </Link>
 
-        <h1 className="mt-6 font-serif text-4xl text-gray-900 sm:text-5xl">{album.title}</h1>
+        <TypewriterHeading as="h1" className="mt-6 font-serif text-4xl text-gray-900 sm:text-5xl">
+          {album.title}
+        </TypewriterHeading>
         {album.description && (
           <p className="mt-4 max-w-2xl text-sm leading-relaxed text-gray-600">
             {album.description}

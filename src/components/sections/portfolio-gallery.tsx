@@ -4,6 +4,7 @@ import Image from 'next/image';
 import { useState } from 'react';
 import Masonry, { ResponsiveMasonry } from 'react-responsive-masonry';
 import { Container } from '@/components/ui/container';
+import { TypewriterHeading } from '@/components/ui/typewriter-heading';
 import { PhotoViewer } from '@/components/story';
 import type { PortfolioItem } from '@/types/portfolio-item';
 import { urlForImage } from '@/lib/sanity/image';
@@ -32,7 +33,9 @@ export function PortfolioGallery({ items }: { items: PortfolioItem[] }) {
   return (
     <section className="bg-white">
       <Container className="py-16">
-        <h2 className="font-serif text-4xl text-gray-900 sm:text-5xl">Featured Photography</h2>
+        <TypewriterHeading as="h2" className="font-serif text-4xl text-gray-900 sm:text-5xl">
+          Featured Photography
+        </TypewriterHeading>
         <p className="mt-4 max-w-2xl text-sm leading-relaxed text-gray-600">
           A curated collection of my finest photographs across every genre. Browse by category to
           discover the stories behind each frame.

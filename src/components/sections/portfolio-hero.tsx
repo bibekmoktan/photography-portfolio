@@ -1,4 +1,5 @@
 import { Container } from '@/components/ui/container';
+import { TypewriterHeading } from '@/components/ui/typewriter-heading';
 import type { PageHero } from '@/types/page-hero';
 
 const DEFAULT_HEADING = "Prabin's Captured Moments";
@@ -10,9 +11,12 @@ export function PortfolioHero({ hero }: { hero?: PageHero }) {
     <section className="bg-white">
       <Container className="py-16 md:pt-24">
         <div className="grid gap-10 md:grid-cols-[1fr_1px_1fr] md:items-center">
-          <h1 className="font-serif text-4xl leading-tight text-gray-900 sm:text-5xl">
+          <TypewriterHeading
+            as="h1"
+            className="font-serif text-4xl leading-tight text-gray-900 sm:text-5xl"
+          >
             {hero?.heading || DEFAULT_HEADING}
-          </h1>
+          </TypewriterHeading>
 
           <div className="hidden w-px self-stretch bg-gray-200 md:block" />
 

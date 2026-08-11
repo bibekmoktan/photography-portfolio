@@ -5,6 +5,6 @@ export type HomePage = {
   heroIntro?: string;
   yearsExperience?: number;
   heroCtaLabel?: string;
-  bannerImage?: SanityImageWithAlt;
-  secondaryImage?: SanityImageWithAlt;
+  bannerImages: SanityImageWithAlt[];
+  secondaryImages: SanityImageWithAlt[];
 };

@@ -1,6 +1,8 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { Container } from '@/components/ui/container';
+import { Reveal } from '@/components/ui/reveal';
+import { TypewriterHeading } from '@/components/ui/typewriter-heading';
 import type { AboutPage } from '@/types/about-page';
 import type { SiteSettings } from '@/types/site-settings';
 import { urlForImage } from '@/lib/sanity/image';
@@ -20,23 +22,25 @@ export function About({
     <section id="about" className="bg-white">
       <Container className="py-16 md:py-24">
         <div className="border-b border-gray-200 pb-8">
-          <h2 className="font-serif text-5xl text-gray-900 sm:text-6xl">About Prabin</h2>
+          <TypewriterHeading as="h2" className="font-serif text-5xl text-gray-900 sm:text-6xl">
+            About Prabin
+          </TypewriterHeading>
         </div>
 
         <div className="mt-10 grid gap-10 md:grid-cols-2">
-          <div className="relative aspect-square w-full self-start overflow-hidden bg-gray-200">
+          <Reveal className="group relative aspect-square w-full self-start overflow-hidden bg-gray-200">
             {aboutPage.portraitImage?.asset && (
               <Image
                 src={urlForImage(aboutPage.portraitImage).width(800).height(800).fit('crop').url()}
                 alt={aboutPage.portraitImage.alt || 'Prabin'}
                 fill
-                className="object-cover"
+                className="object-cover transition-transform duration-500 group-hover:scale-105"
                 sizes="(min-width: 768px) 50vw, 100vw"
               />
             )}
-          </div>
+          </Reveal>
 
-          <div className="flex flex-col gap-8 self-center">
+          <Reveal delay={0.15} className="flex flex-col gap-8 self-center">
             <p className="text-sm leading-relaxed text-gray-600">
               {aboutPage.bioShort || DEFAULT_BIO}
             </p>
@@ -97,11 +101,17 @@ export function About({
 
             <Link
               href="/about"
-              className="flex w-fit items-center gap-1 rounded-none bg-gray-900 px-6 py-3 text-sm font-medium text-white transition-colors hover:bg-gray-700"
+              className="group flex w-fit items-center gap-1 rounded-none bg-gray-900 px-6 py-3 text-sm font-medium text-white transition-all duration-300 hover:-translate-y-0.5 hover:bg-gray-700 hover:shadow-lg active:translate-y-0 active:scale-95"
             >
-              <span aria-hidden>»</span> Know More About Me
+              <span
+                aria-hidden
+                className="transition-transform duration-300 group-hover:translate-x-1"
+              >
+                »
+              </span>{' '}
+              Know More About Me
             </Link>
-          </div>
+          </Reveal>
         </div>
       </Container>
     </section>

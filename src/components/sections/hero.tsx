@@ -1,8 +1,9 @@
-import Image from 'next/image';
 import Link from 'next/link';
 import { Container } from '@/components/ui/container';
+import { ImageSlider } from '@/components/ui/image-slider';
+import { Reveal } from '@/components/ui/reveal';
+import { TypewriterHeading } from '@/components/ui/typewriter-heading';
 import type { HomePage } from '@/types/home-page';
-import { urlForImage } from '@/lib/sanity/image';
 
 const DEFAULT_HEADING = 'Photography by Prabin Kulung Rai';
 const DEFAULT_CTA_LABEL = "Explore Prabin's Portfolio";
@@ -18,22 +19,28 @@ export function Hero({ homePage }: { homePage: HomePage }) {
     <section id="home" className="bg-white">
       <Container className="py-16 md:py-24">
         <div className="grid gap-10 md:grid-cols-2 md:items-start">
-          <h1 className="font-serif text-4xl leading-tight text-gray-900 sm:text-5xl md:text-6xl">
+          <TypewriterHeading
+            as="h1"
+            className="font-serif text-4xl leading-tight text-gray-900 sm:text-5xl md:text-6xl"
+          >
             {homePage.heroHeading || DEFAULT_HEADING}
-          </h1>
+          </TypewriterHeading>
 
           <div className="flex flex-col gap-6 md:items-end">
-            <div className="relative aspect-[32/9] w-full overflow-hidden bg-gray-200">
-              {homePage.bannerImage?.asset && (
-                <Image
-                  src={urlForImage(homePage.bannerImage).width(1600).height(450).fit('crop').url()}
-                  alt={homePage.bannerImage.alt || 'Prabin Kulung Rai photography'}
-                  fill
-                  className="object-cover"
-                  sizes="100vw"
-                />
-              )}
-              <span className="absolute right-3 bottom-3 flex h-10 w-10 items-center justify-center rounded-full bg-gray-900 text-white">
+            <div className="group relative aspect-[32/9] w-full overflow-hidden bg-gray-200">
+              <ImageSlider
+                images={homePage.bannerImages}
+                width={1600}
+                height={450}
+                sizes="100vw"
+                fallbackAlt="Prabin Kulung Rai photography"
+                className="object-cover transition-transform duration-500 group-hover:scale-105"
+              />
+              <Link
+                href="#portfolio"
+                aria-label="Explore the portfolio"
+                className="absolute right-3 bottom-3 flex h-10 w-10 items-center justify-center rounded-full bg-gray-900 text-white transition-transform duration-300 group-hover:scale-110 active:scale-95"
+              >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 24 24"
@@ -47,25 +54,29 @@ export function Hero({ homePage }: { homePage: HomePage }) {
                   <path d="M7 17 17 7" />
                   <path d="M7 7h10v10" />
                 </svg>
-              </span>
+              </Link>
             </div>
-            <p className="w-full text-sm leading-relaxed text-gray-600">
-              {buildIntro(homePage.heroIntro, homePage.yearsExperience)}
-            </p>
+            <Reveal delay={0.2} className="w-full">
+              <p className="text-sm leading-relaxed text-gray-600">
+                {buildIntro(homePage.heroIntro, homePage.yearsExperience)}
+              </p>
+            </Reveal>
           </div>
         </div>
 
-        <div className="mt-16 grid gap-8 border-t border-gray-200 md:grid-cols-[3fr_1px_1fr] md:items-stretch">
-          <div className="relative mt-8 aspect-[16/9] w-full bg-gray-200">
-            {homePage.secondaryImage?.asset && (
-              <Image
-                src={urlForImage(homePage.secondaryImage).width(1200).height(675).fit('crop').url()}
-                alt={homePage.secondaryImage.alt || 'Prabin Kulung Rai photography'}
-                fill
-                className="object-cover"
-                sizes="(min-width: 768px) 60vw, 100vw"
-              />
-            )}
+        <Reveal
+          delay={0.1}
+          className="mt-16 grid gap-8 border-t border-gray-200 md:grid-cols-[3fr_1px_1fr] md:items-stretch"
+        >
+          <div className="group relative mt-8 aspect-[16/9] w-full overflow-hidden bg-gray-200">
+            <ImageSlider
+              images={homePage.secondaryImages}
+              width={1200}
+              height={675}
+              sizes="(min-width: 768px) 60vw, 100vw"
+              fallbackAlt="Prabin Kulung Rai photography"
+              className="object-cover transition-transform duration-500 group-hover:scale-105"
+            />
           </div>
 
           <div className="hidden bg-gray-200 md:block" />
@@ -73,12 +84,12 @@ export function Hero({ homePage }: { homePage: HomePage }) {
           <div className="flex flex-nowrap items-center justify-center gap-3">
             <Link
               href="#portfolio"
-              className="rounded-none bg-gray-900 px-6 py-3 text-sm font-medium text-white transition-colors hover:bg-gray-700"
+              className="rounded-none bg-gray-900 px-6 py-3 text-sm font-medium text-white transition-all duration-300 hover:-translate-y-0.5 hover:bg-gray-700 hover:shadow-lg active:translate-y-0 active:scale-95"
             >
               {homePage.heroCtaLabel || DEFAULT_CTA_LABEL}
             </Link>
           </div>
-        </div>
+        </Reveal>
       </Container>
     </section>
   );

@@ -3,6 +3,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { Container } from '@/components/ui/container';
+import { TypewriterHeading } from '@/components/ui/typewriter-heading';
 import { CategoryTag, HighlightBlock } from '@/components/story';
 import { getStories, getStoryBySlug } from '@/lib/stories';
 import { urlForImage } from '@/lib/sanity/image';
@@ -45,7 +46,9 @@ export default async function StoryPage({ params }: PageProps<'/projects/[slug]'
             <span className="text-xs font-medium tracking-wide text-gray-500 uppercase">
               {story.location}
             </span>
-            <h1 className="font-serif text-4xl text-gray-900 sm:text-5xl">{story.title}</h1>
+            <TypewriterHeading as="h1" className="font-serif text-4xl text-gray-900 sm:text-5xl">
+              {story.title}
+            </TypewriterHeading>
             <div className="flex flex-wrap gap-2">
               {story.categories.map((category) => (
                 <CategoryTag key={category} category={category} />

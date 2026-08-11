@@ -1,5 +1,6 @@
 export { Hero } from './hero';
 export { About } from './about';
+export { FeaturedWork } from './featured-work';
 export { AboutHero } from './about-hero';
 export { Journey } from './journey';
 export { Awards } from './awards';

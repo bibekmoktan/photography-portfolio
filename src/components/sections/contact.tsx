@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { Container } from '@/components/ui/container';
+import { TypewriterHeading } from '@/components/ui/typewriter-heading';
 import type { SiteSettings } from '@/types/site-settings';
 
 export function Contact({ siteSettings }: { siteSettings: SiteSettings }) {
@@ -9,11 +10,12 @@ export function Contact({ siteSettings }: { siteSettings: SiteSettings }) {
       className="border-t-1 border-b-1 border-t-gray-200 border-b-gray-200 bg-white"
     >
       <Container className="grid gap-10 py-16 md:grid-cols-2 md:items-center md:py-24">
-        <h2 className="font-serif text-4xl leading-tight text-gray-900 sm:text-5xl">
-          Ready to Bring Your
-          <br />
-          Vision to Life?
-        </h2>
+        <TypewriterHeading
+          as="h2"
+          className="font-serif text-4xl leading-tight text-gray-900 sm:text-5xl"
+        >
+          {'Ready to Bring Your\nVision to Life?'}
+        </TypewriterHeading>
 
         <div className="flex flex-col gap-6">
           <p className="text-sm leading-relaxed text-gray-600">

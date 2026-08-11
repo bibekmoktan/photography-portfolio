@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { Container } from '@/components/ui/container';
+import { TypewriterHeading } from '@/components/ui/typewriter-heading';
 import type { SiteSettings } from '@/types/site-settings';
 import { SOCIAL_ICON_PATHS } from '@/lib/social-links';
 
@@ -22,7 +23,9 @@ export function ContactForm({
           <div>
             {submitted ? (
               <div className="flex flex-col gap-2 rounded-md border border-gray-200 bg-gray-50 p-8">
-                <h2 className="font-serif text-2xl text-gray-900">Thanks for reaching out</h2>
+                <TypewriterHeading as="h2" className="font-serif text-2xl text-gray-900">
+                  Thanks for reaching out
+                </TypewriterHeading>
                 <p className="text-sm leading-relaxed text-gray-600">
                   Your message has been received.
                   {siteSettings.responseTimeNote ? ` ${siteSettings.responseTimeNote}` : ''}

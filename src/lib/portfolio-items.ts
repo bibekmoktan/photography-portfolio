@@ -23,3 +23,9 @@ export async function getPortfolioItems(category?: Category): Promise<PortfolioI
     `*[_type == "portfolioItem"] | order(order asc) ${PORTFOLIO_ITEM_PROJECTION}`,
   );
 }
+
+export async function getFeaturedPortfolioItems(): Promise<PortfolioItem[]> {
+  return sanityFetch<PortfolioItem[]>(
+    `*[_type == "portfolioItem" && featured == true] | order(order asc) ${PORTFOLIO_ITEM_PROJECTION}`,
+  );
+}

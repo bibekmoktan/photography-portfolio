@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { Geist, Geist_Mono } from 'next/font/google';
 import { Navbar, Footer } from '@/components/layout';
 import { Contact } from '@/components/sections';
+import { SmoothScroll } from '@/components/providers/smooth-scroll';
 import { getSiteSettings } from '@/lib/site-settings';
 import './globals.css';
 
@@ -33,6 +34,7 @@ export default async function RootLayout({ children }: LayoutProps<'/'>) {
   return (
     <html lang="en" className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}>
       <body className="flex min-h-full flex-col">
+        <SmoothScroll />
         <Navbar />
         <main className="flex-1">{children}</main>
         <Contact siteSettings={siteSettings} />
