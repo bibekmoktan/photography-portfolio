@@ -13,6 +13,8 @@ import type { PortfolioItem } from '@/types/portfolio-item';
 
 gsap.registerPlugin(ScrollTrigger);
 
+const MOBILE_IMAGE_COUNT = 10;
+
 /** Placeholder-only field, never present on real Sanity portfolio items. */
 type GalleryItem = PortfolioItem & { imageUrl?: string };
 
@@ -43,6 +45,50 @@ const FALLBACK_FEATURED_WORK: GalleryItem[] = FALLBACK_PHOTO_IDS.map((photoId, i
   imageUrl: `https://images.unsplash.com/photo-${photoId}?w=800&h=1000&fit=crop&auto=format&q=80`,
 }));
 
+function GalleryImage({
+  item,
+  sizes,
+  className = 'object-cover',
+}: {
+  item: GalleryItem;
+  sizes: string;
+  className?: string;
+}) {
+  if (item.image) {
+    return (
+      <ImageSlider
+        images={[item.image]}
+        width={800}
+        height={1000}
+        sizes={sizes}
+        fallbackAlt={item.title || item.category}
+        className={className}
+      />
+    );
+  }
+  if (item.imageUrl) {
+    return (
+      <Image
+        src={item.imageUrl}
+        alt={item.title || item.category}
+        fill
+        sizes={sizes}
+        className={className}
+      />
+    );
+  }
+  return (
+    <ImageSlider
+      images={[]}
+      width={800}
+      height={1000}
+      sizes={sizes}
+      fallbackAlt={item.title || item.category}
+      className={className}
+    />
+  );
+}
+
 export function FeaturedWork({ items }: { items: PortfolioItem[] }) {
   const stickyRef = useRef<HTMLDivElement>(null);
   const trackRef = useRef<HTMLDivElement>(null);
@@ -51,6 +97,7 @@ export function FeaturedWork({ items }: { items: PortfolioItem[] }) {
   const [activeIndex, setActiveIndex] = useState(0);
 
   const displayItems: GalleryItem[] = items.length > 0 ? items : FALLBACK_FEATURED_WORK;
+  const mobileItems = displayItems.slice(0, MOBILE_IMAGE_COUNT);
 
   useEffect(() => {
     const sticky = stickyRef.current;
@@ -60,7 +107,7 @@ export function FeaturedWork({ items }: { items: PortfolioItem[] }) {
 
     const mm = gsap.matchMedia();
 
-    mm.add('(min-width: 768px)', () => {
+    mm.add('(min-width: 1024px)', () => {
       const cards = cardRefs.current.filter((card): card is HTMLAnchorElement => Boolean(card));
       const scrollDistance = () => track.scrollWidth - sticky.clientWidth;
 
@@ -141,16 +188,27 @@ export function FeaturedWork({ items }: { items: PortfolioItem[] }) {
             A closer look at standout moments from recent shoots — scroll to explore.
           </p>
         </div>
-        <span className="hidden font-mono text-xs tracking-widest text-gray-400 uppercase sm:block">
+        <span className="hidden font-mono text-xs tracking-widest text-gray-400 uppercase lg:block">
           Scroll
         </span>
       </Container>
 
-      <div ref={stickyRef} className="relative mt-10 h-screen overflow-hidden">
-        <div
-          ref={trackRef}
-          className="no-scrollbar flex h-full w-max snap-x snap-mandatory items-center gap-10 overflow-x-auto pt-24 pl-4 md:snap-none md:overflow-visible md:pl-[8vw]"
-        >
+      {/* Below 1024px: a plain swipeable strip of the first 10 images, no pin/scale effect. */}
+      <div className="no-scrollbar mt-10 flex snap-x snap-mandatory gap-4 overflow-x-auto px-4 pb-4 lg:hidden">
+        {mobileItems.map((item) => (
+          <Link
+            key={item._id}
+            href="/portfolio"
+            className="relative block h-72 w-60 shrink-0 snap-center overflow-hidden rounded-sm bg-gray-200 shadow-lg sm:h-80 sm:w-64"
+          >
+            <GalleryImage item={item} sizes="(min-width: 640px) 256px, 240px" />
+          </Link>
+        ))}
+      </div>
+
+      {/* 1024px and up: pinned horizontal scroll with scroll-driven scale/focus. */}
+      <div ref={stickyRef} className="relative mt-10 hidden h-screen overflow-hidden lg:block">
+        <div ref={trackRef} className="flex h-full w-max items-center gap-10 pt-24 pl-[8vw]">
           {displayItems.map((item, index) => (
             <Link
               key={item._id}
@@ -158,35 +216,9 @@ export function FeaturedWork({ items }: { items: PortfolioItem[] }) {
               ref={(el) => {
                 if (el) cardRefs.current[index] = el;
               }}
-              className="relative block h-[75vh] w-[68vw] shrink-0 snap-center overflow-hidden rounded-sm bg-gray-200 shadow-2xl sm:w-[28vw]"
+              className="relative block h-[75vh] w-[28vw] shrink-0 snap-center overflow-hidden rounded-sm bg-gray-200 shadow-2xl"
             >
-              {item.image ? (
-                <ImageSlider
-                  images={[item.image]}
-                  width={800}
-                  height={1000}
-                  sizes="(min-width: 768px) 28vw, 68vw"
-                  fallbackAlt={item.title || item.category}
-                  className="object-cover"
-                />
-              ) : item.imageUrl ? (
-                <Image
-                  src={item.imageUrl}
-                  alt={item.title || item.category}
-                  fill
-                  sizes="(min-width: 768px) 28vw, 68vw"
-                  className="object-cover"
-                />
-              ) : (
-                <ImageSlider
-                  images={[]}
-                  width={800}
-                  height={1000}
-                  sizes="(min-width: 768px) 28vw, 68vw"
-                  fallbackAlt={item.title || item.category}
-                  className="object-cover"
-                />
-              )}
+              <GalleryImage item={item} sizes="28vw" />
               <div
                 data-shade
                 aria-hidden
@@ -197,7 +229,7 @@ export function FeaturedWork({ items }: { items: PortfolioItem[] }) {
           <div aria-hidden className="w-[15vw] shrink-0" />
         </div>
 
-        <div className="pointer-events-none absolute inset-x-0 bottom-0 hidden md:block">
+        <div className="pointer-events-none absolute inset-x-0 bottom-0 hidden lg:block">
           <Container className="flex items-end justify-end gap-6 pb-10">
             <div className="flex items-center gap-3 font-mono text-xs text-gray-400">
               <span className="text-gray-900">{String(activeIndex + 1).padStart(2, '0')}</span>

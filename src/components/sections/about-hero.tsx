@@ -1,9 +1,13 @@
 import Image from 'next/image';
 import { Container } from '@/components/ui/container';
+import { Reveal } from '@/components/ui/reveal';
 import { TypewriterHeading } from '@/components/ui/typewriter-heading';
 import type { AboutPage } from '@/types/about-page';
 import { urlForImage } from '@/lib/sanity/image';
 import { Prose } from '@/lib/sanity/portable-text';
+
+const DEFAULT_BIO =
+  'Based between studio and open road, Prabin turns fleeting moments into portraits, weddings, and travel stories that hold their emotion long after the shutter closes.';
 
 export function AboutHero({ aboutPage }: { aboutPage: AboutPage }) {
   return (
@@ -13,65 +17,75 @@ export function AboutHero({ aboutPage }: { aboutPage: AboutPage }) {
           <TypewriterHeading as="h1" className="font-serif text-4xl text-gray-900 sm:text-5xl">
             About Prabin Kulung Rai
           </TypewriterHeading>
-          <p className="max-w-sm text-sm leading-relaxed text-gray-600">
-            Get to know the visionary behind the lens, Prabin Kulung Rai, and the remarkable journey
-            through the world of photography.
-          </p>
+          <Reveal delay={0.15} className="max-w-sm">
+            <p className="text-sm leading-relaxed text-gray-600">
+              Get to know the visionary behind the lens, Prabin Kulung Rai, and the remarkable
+              journey through the world of photography.
+            </p>
+          </Reveal>
         </div>
 
-        <div className="mt-10 grid gap-10 md:grid-cols-[1fr_2fr]">
-          <div className="flex flex-col gap-6">
-            <div className="relative aspect-square w-full bg-gray-200">
-              {aboutPage.portraitImage?.asset && (
-                <Image
-                  src={urlForImage(aboutPage.portraitImage)
-                    .width(600)
-                    .height(600)
-                    .fit('crop')
-                    .url()}
-                  alt={aboutPage.portraitImage.alt || 'Prabin Kulung Rai'}
-                  fill
-                  className="object-cover"
-                  sizes="(min-width: 768px) 33vw, 100vw"
-                />
-              )}
-            </div>
-            <div>
-              <p className="font-serif text-sm text-gray-500 italic">Biography of</p>
-              <TypewriterHeading as="h2" className="font-serif text-2xl text-gray-900">
-                Prabin Kulung Rai
-              </TypewriterHeading>
-            </div>
-          </div>
-
-          <div className="relative overflow-hidden rounded-lg">
+        <div className="mt-14 grid gap-16 md:grid-cols-[1.1fr_1fr] md:items-center">
+          <Reveal className="relative">
             <span
               aria-hidden
-              className="pointer-events-none absolute -top-8 -right-4 font-serif text-[14rem] leading-none font-semibold text-gray-100 select-none md:text-[18rem]"
+              className="pointer-events-none absolute -top-10 -left-6 font-serif text-[10rem] leading-none font-semibold text-gray-100 select-none sm:-left-10 sm:text-[14rem]"
             >
               P
             </span>
-            <div className="relative z-10 aspect-[3/4] w-3/5 bg-gray-200">
-              {aboutPage.secondaryImage?.asset && (
-                <Image
-                  src={urlForImage(aboutPage.secondaryImage)
-                    .width(600)
-                    .height(800)
-                    .fit('crop')
-                    .url()}
-                  alt={aboutPage.secondaryImage.alt || 'Prabin Kulung Rai'}
-                  fill
-                  className="object-cover"
-                  sizes="(min-width: 768px) 33vw, 60vw"
-                />
-              )}
+
+            <div className="relative w-4/5">
+              <div className="group relative aspect-[4/5] w-full overflow-hidden rounded-lg bg-gray-200 shadow-xl">
+                {aboutPage.portraitImage?.asset && (
+                  <Image
+                    src={urlForImage(aboutPage.portraitImage)
+                      .width(700)
+                      .height(875)
+                      .fit('crop')
+                      .url()}
+                    alt={aboutPage.portraitImage.alt || 'Prabin Kulung Rai'}
+                    fill
+                    className="object-cover transition-transform duration-500 group-hover:scale-105"
+                    sizes="(min-width: 768px) 40vw, 70vw"
+                  />
+                )}
+              </div>
+
+              <div className="group absolute -right-4 -bottom-6 aspect-[3/4] w-2/5 overflow-hidden rounded-lg border-4 border-white bg-gray-200 shadow-xl sm:-right-8 sm:-bottom-10">
+                {aboutPage.secondaryImage?.asset && (
+                  <Image
+                    src={urlForImage(aboutPage.secondaryImage)
+                      .width(500)
+                      .height(667)
+                      .fit('crop')
+                      .url()}
+                    alt={aboutPage.secondaryImage.alt || 'Prabin Kulung Rai'}
+                    fill
+                    className="object-cover transition-transform duration-500 group-hover:scale-105"
+                    sizes="(min-width: 768px) 20vw, 35vw"
+                  />
+                )}
+              </div>
             </div>
-          </div>
+          </Reveal>
+
+          <Reveal delay={0.15} className="flex flex-col gap-4 md:pl-6">
+            <span className="text-xs font-medium tracking-widest text-gray-500 uppercase">
+              Photographer &amp; Visual Storyteller
+            </span>
+            <TypewriterHeading as="h2" className="font-serif text-3xl text-gray-900">
+              Prabin Kulung Rai
+            </TypewriterHeading>
+            <div className="h-px w-16 bg-gray-300" />
+            <p className="text-sm leading-relaxed text-gray-600">
+              {aboutPage.bioShort || DEFAULT_BIO}
+            </p>
+          </Reveal>
         </div>
 
-        <div className="mt-10 max-w-4xl border-t border-gray-200 pt-10">
+        <Reveal delay={0.1} className="mt-16 max-w-4xl border-t border-gray-200 pt-10">
           <Prose value={aboutPage.bioLong} />
-        </div>
+        </Reveal>
       </Container>
     </section>
   );

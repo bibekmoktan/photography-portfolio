@@ -28,7 +28,7 @@ export function Contact({ siteSettings }: { siteSettings: SiteSettings }) {
             <h3 className="text-lg font-semibold text-gray-900">Contact Me</h3>
             <div className="flex flex-wrap gap-3">
               <Link
-                href="#contact"
+                href="/contact"
                 className="rounded-md bg-gray-900 px-6 py-3 text-sm font-medium text-white transition-colors hover:bg-gray-700"
               >
                 Go to Contact Page

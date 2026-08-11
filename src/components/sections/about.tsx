@@ -103,12 +103,6 @@ export function About({
               href="/about"
               className="group flex w-fit items-center gap-1 rounded-none bg-gray-900 px-6 py-3 text-sm font-medium text-white transition-all duration-300 hover:-translate-y-0.5 hover:bg-gray-700 hover:shadow-lg active:translate-y-0 active:scale-95"
             >
-              <span
-                aria-hidden
-                className="transition-transform duration-300 group-hover:translate-x-1"
-              >
-                »
-              </span>{' '}
               Know More About Me
             </Link>
           </Reveal>

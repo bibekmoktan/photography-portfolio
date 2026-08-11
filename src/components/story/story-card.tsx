@@ -28,7 +28,7 @@ export function StoryCard({ story }: { story: Story }) {
         <h3 className="font-serif text-2xl text-gray-900">{story.title}</h3>
         <p className="text-sm leading-relaxed text-gray-600">{story.summary}</p>
         <div className="flex flex-wrap justify-between gap-2 pt-2 pr-2">
-          <div className="flex items-center gap-2">
+          <div className="flex flex-wrap items-center gap-2">
             {story.categories.map((category) => (
               <CategoryTag key={category} category={category} />
             ))}

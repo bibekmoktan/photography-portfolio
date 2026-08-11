@@ -18,7 +18,7 @@ export function ContactForm({
 
   return (
     <section className="bg-white">
-      <Container className="py-16 md:py-24">
+      <Container className="pb-12">
         <div className="grid gap-12 border-t border-gray-200 pt-16 md:grid-cols-[3fr_1px_2fr]">
           <div>
             {submitted ? (

@@ -26,5 +26,11 @@ export async function getAboutPage(): Promise<AboutPage> {
       "stats": stats[]{ value, label }
     }`,
   );
-  return aboutPage ?? EMPTY_ABOUT_PAGE;
+  if (!aboutPage) return EMPTY_ABOUT_PAGE;
+  return {
+    ...aboutPage,
+    journeyItems: aboutPage.journeyItems ?? [],
+    awardItems: aboutPage.awardItems ?? [],
+    stats: aboutPage.stats ?? [],
+  };
 }

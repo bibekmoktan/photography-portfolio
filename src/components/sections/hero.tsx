@@ -105,7 +105,7 @@ export function Hero({ homePage }: { homePage: HomePage }) {
 
           <div className="flex flex-nowrap items-center justify-center gap-3">
             <Link
-              href="#portfolio"
+              href="/portfolio"
               className="rounded-none bg-gray-900 px-6 py-3 text-sm font-medium text-white transition-all duration-300 hover:-translate-y-0.5 hover:bg-gray-700 hover:shadow-lg active:translate-y-0 active:scale-95"
             >
               {homePage.heroCtaLabel || DEFAULT_CTA_LABEL}
