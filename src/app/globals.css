@@ -4,30 +4,6 @@ html {
   scroll-padding-top: 5rem;
 }
 
-@keyframes kenburns {
-  0% {
-    opacity: 0;
-    transform: scale(1.08);
-  }
-  15% {
-    opacity: 1;
-  }
-  100% {
-    opacity: 1;
-    transform: scale(1);
-  }
-}
-
-.animate-kenburns {
-  animation: kenburns 2.4s ease-out forwards;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .animate-kenburns {
-    animation: none;
-  }
-}
-
 .no-scrollbar {
   scrollbar-width: none;
   -ms-overflow-style: none;

@@ -20,5 +20,13 @@ export async function getSiteSettings(): Promise<SiteSettings> {
       "footerColumns": footerColumns[]{ title, "links": links[]{ label, href } }
     }`,
   );
-  return settings ?? EMPTY_SITE_SETTINGS;
+  if (!settings) return EMPTY_SITE_SETTINGS;
+  return {
+    ...settings,
+    socialLinks: settings.socialLinks ?? [],
+    footerColumns: (settings.footerColumns ?? []).map((column) => ({
+      ...column,
+      links: column.links ?? [],
+    })),
+  };
 }

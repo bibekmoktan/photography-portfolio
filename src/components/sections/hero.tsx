@@ -8,6 +8,26 @@ import type { HomePage } from '@/types/home-page';
 const DEFAULT_HEADING = 'Photography by Prabin Kulung Rai';
 const DEFAULT_CTA_LABEL = "Explore Prabin's Portfolio";
 
+/** Verified-reachable Unsplash photos shown until real banner/secondary images are set in Sanity. */
+const BANNER_FALLBACK_IDS = [
+  '1519085360753-af0119f7cbe7',
+  '1441716844725-09cedc13a4e7',
+  '1506905925346-21bda4d32df4',
+  '1447752875215-b2761acb3c5d',
+];
+const SECONDARY_FALLBACK_IDS = [
+  '1472214103451-9374bd1c798e',
+  '1426604966848-d7adac402bff',
+  '1501594907352-04cda38ebc29',
+  '1483728642387-6c3bdd6c93e5',
+];
+const BANNER_FALLBACK_IMAGES = BANNER_FALLBACK_IDS.map(
+  (id) => `https://images.unsplash.com/photo-${id}?w=1600&h=450&fit=crop&auto=format&q=80`,
+);
+const SECONDARY_FALLBACK_IMAGES = SECONDARY_FALLBACK_IDS.map(
+  (id) => `https://images.unsplash.com/photo-${id}?w=1200&h=675&fit=crop&auto=format&q=80`,
+);
+
 function buildIntro(heroIntro: string | undefined, yearsExperience: number | undefined) {
   if (heroIntro) return heroIntro;
   const years = yearsExperience ? `${yearsExperience} years` : 'many years';
@@ -34,6 +54,7 @@ export function Hero({ homePage }: { homePage: HomePage }) {
                 height={450}
                 sizes="100vw"
                 fallbackAlt="Prabin Kulung Rai photography"
+                fallbackImageUrls={BANNER_FALLBACK_IMAGES}
                 className="object-cover transition-transform duration-500 group-hover:scale-105"
               />
               <Link
@@ -75,6 +96,7 @@ export function Hero({ homePage }: { homePage: HomePage }) {
               height={675}
               sizes="(min-width: 768px) 60vw, 100vw"
               fallbackAlt="Prabin Kulung Rai photography"
+              fallbackImageUrls={SECONDARY_FALLBACK_IMAGES}
               className="object-cover transition-transform duration-500 group-hover:scale-105"
             />
           </div>
