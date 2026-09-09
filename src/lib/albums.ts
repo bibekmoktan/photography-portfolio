@@ -12,7 +12,10 @@ const ALBUM_PROJECTION = `{
 }`;
 
 export async function getAlbums(): Promise<Album[]> {
-  return sanityFetch<Album[]>(`*[_type == "album"] | order(title asc) ${ALBUM_PROJECTION}`);
+  const albums = await sanityFetch<Album[]>(
+    `*[_type == "album"] | order(title asc) ${ALBUM_PROJECTION}`,
+  );
+  return albums.map((album) => ({ ...album, images: album.images ?? [] }));
 }
 
 export async function getAlbumBySlug(slug: string): Promise<Album | undefined> {
@@ -20,5 +23,5 @@ export async function getAlbumBySlug(slug: string): Promise<Album | undefined> {
     `*[_type == "album" && slug.current == $slug][0] ${ALBUM_PROJECTION}`,
     { slug },
   );
-  return album ?? undefined;
+  return album ? { ...album, images: album.images ?? [] } : undefined;
 }

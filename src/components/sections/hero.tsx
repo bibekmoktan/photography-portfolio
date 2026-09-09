@@ -17,6 +17,26 @@ const BANNER_FALLBACK_IMAGES = [
 const SECONDARY_FALLBACK_IMAGES = [
   'https://images.unsplash.com/photo-1472214103451-9374bd1c798e?w=1200&h=675&fit=crop&auto=format&q=80',
 ];
+/** Verified-reachable Unsplash photos shown until real hero images are set in Sanity. */
+const HERO_FALLBACK_IDS = [
+  '1519085360753-af0119f7cbe7',
+  '1441716844725-09cedc13a4e7',
+  '1506905925346-21bda4d32df4',
+  '1447752875215-b2761acb3c5d',
+  '1472214103451-9374bd1c798e',
+  '1426604966848-d7adac402bff',
+  '1501594907352-04cda38ebc29',
+  '1483728642387-6c3bdd6c93e5',
+];
+const HERO_FALLBACK_IMAGES = HERO_FALLBACK_IDS.map(
+  (id) => `https://images.unsplash.com/photo-${id}?w=1920&h=1080&fit=crop&auto=format&q=80`,
+);
+
+function buildIntro(heroIntro: string | undefined, yearsExperience: number | undefined) {
+  if (heroIntro) return heroIntro;
+  const years = yearsExperience ? `${yearsExperience} years` : 'many years';
+  return `Welcome to Prabin Kulung Rai's world of photography, where moments are not just captured but transformed into timeless memories. With a keen eye for detail and a passion for storytelling, Prabin has been crafting visual narratives for ${years}. The lens unveils the beauty in the ordinary and transforms the extraordinary into sheer artistry.`;
+}
 
 export function Hero({ homePage }: { homePage: HomePage }) {
   const hero = homePage.heroSection;
