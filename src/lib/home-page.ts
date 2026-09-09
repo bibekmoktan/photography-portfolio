@@ -8,7 +8,7 @@ const EMPTY_HOME_PAGE: HomePage = {
 export async function getHomePage(): Promise<HomePage> {
   const homePage = await sanityFetch<HomePage | null>(
     `*[_type == "homePage" && _id == "homePage"][0]{
-      heroSection{heading, subheading, ctaLabel, image{asset, alt}},
+      heroSection{heading, subheading, ctaLabel, "images": images[]{asset, alt}},
       aboutSection{heading, bio, image{asset, alt}},
       featureSection{heading, description, features[]{title, description, image{asset, alt}}}
     }`,
@@ -16,6 +16,10 @@ export async function getHomePage(): Promise<HomePage> {
   if (!homePage) return EMPTY_HOME_PAGE;
   return {
     ...homePage,
+    heroSection: {
+      ...homePage.heroSection,
+      images: homePage.heroSection?.images ?? [],
+    },
     featureSection: {
       ...homePage.featureSection,
       features: homePage.featureSection?.features ?? [],

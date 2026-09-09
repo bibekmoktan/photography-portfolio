@@ -4,6 +4,7 @@ import { Geist, Geist_Mono } from 'next/font/google';
 import { Navbar, Footer } from '@/components/layout';
 import { Contact } from '@/components/sections';
 import { SmoothScroll } from '@/components/providers/smooth-scroll';
+import { env } from '@/lib/env';
 import './globals.css';
 
 const geistSans = Geist({
@@ -17,6 +18,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(env.NEXT_PUBLIC_SITE_URL),
   title: {
     default: 'Prabin Kulung Rai Photography',
     template: '%s | Prabin Kulung Rai Photography',

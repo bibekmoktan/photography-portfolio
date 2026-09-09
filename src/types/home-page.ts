@@ -11,7 +11,7 @@ export type HomePage = {
     heading?: string;
     subheading?: string;
     ctaLabel?: string;
-    image?: SanityImage;
+    images: SanityImage[];
   };
   aboutSection?: {
     heading?: string;

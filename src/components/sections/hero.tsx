@@ -10,13 +10,6 @@ const DEFAULT_SUBHEADING =
   "Welcome to Prabin Kulung Rai's world of photography, where moments are not just captured but transformed into timeless memories. With a keen eye for detail and a passion for storytelling, Prabin has been crafting visual narratives for years. The lens unveils the beauty in the ordinary and transforms the extraordinary into sheer artistry.";
 const DEFAULT_CTA_LABEL = "Explore Prabin's Portfolio";
 
-/** Verified-reachable Unsplash photos shown until a hero image is set in Sanity. */
-const BANNER_FALLBACK_IMAGES = [
-  'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=1600&h=450&fit=crop&auto=format&q=80',
-];
-const SECONDARY_FALLBACK_IMAGES = [
-  'https://images.unsplash.com/photo-1472214103451-9374bd1c798e?w=1200&h=675&fit=crop&auto=format&q=80',
-];
 /** Verified-reachable Unsplash photos shown until real hero images are set in Sanity. */
 const HERO_FALLBACK_IDS = [
   '1519085360753-af0119f7cbe7',
@@ -32,92 +25,53 @@ const HERO_FALLBACK_IMAGES = HERO_FALLBACK_IDS.map(
   (id) => `https://images.unsplash.com/photo-${id}?w=1920&h=1080&fit=crop&auto=format&q=80`,
 );
 
-function buildIntro(heroIntro: string | undefined, yearsExperience: number | undefined) {
-  if (heroIntro) return heroIntro;
-  const years = yearsExperience ? `${yearsExperience} years` : 'many years';
-  return `Welcome to Prabin Kulung Rai's world of photography, where moments are not just captured but transformed into timeless memories. With a keen eye for detail and a passion for storytelling, Prabin has been crafting visual narratives for ${years}. The lens unveils the beauty in the ordinary and transforms the extraordinary into sheer artistry.`;
-}
-
 export function Hero({ homePage }: { homePage: HomePage }) {
   const hero = homePage.heroSection;
-  const heroImages = hero?.image?.asset ? [hero.image] : [];
 
   return (
-    <section id="home" className="bg-white">
-      <Container className="py-16 md:py-24">
-        <div className="grid gap-10 md:grid-cols-2 md:items-start">
-          <TypewriterHeading
-            as="h1"
-            className="font-serif text-4xl leading-tight text-gray-900 sm:text-5xl md:text-6xl"
-          >
-            {hero?.heading || DEFAULT_HEADING}
-          </TypewriterHeading>
+    <section
+      id="home"
+      className="relative h-[92vh] min-h-[640px] w-full overflow-hidden bg-gray-900"
+    >
+      <div className="absolute inset-0">
+        <ImageSlider
+          images={hero?.images ?? []}
+          width={1920}
+          height={1080}
+          sizes="100vw"
+          fallbackAlt="Prabin Kulung Rai photography"
+          fallbackImageUrls={HERO_FALLBACK_IMAGES}
+          className="object-cover"
+        />
+      </div>
 
-          <div className="flex flex-col gap-6 md:items-end">
-            <div className="group relative aspect-[32/9] w-full overflow-hidden bg-gray-200">
-              <ImageSlider
-                images={heroImages}
-                width={1600}
-                height={450}
-                sizes="100vw"
-                fallbackAlt="Prabin Kulung Rai photography"
-                fallbackImageUrls={BANNER_FALLBACK_IMAGES}
-                className="object-cover transition-transform duration-500 group-hover:scale-105"
-              />
-              <Link
-                href="#portfolio"
-                aria-label="Explore the portfolio"
-                className="absolute right-3 bottom-3 flex h-10 w-10 items-center justify-center rounded-full bg-gray-900 text-white transition-transform duration-300 group-hover:scale-110 active:scale-95"
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth={2}
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  className="h-4 w-4"
-                >
-                  <path d="M7 17 17 7" />
-                  <path d="M7 7h10v10" />
-                </svg>
-              </Link>
-            </div>
-            <Reveal delay={0.2} className="w-full">
-              <p className="text-sm leading-relaxed text-gray-600">
-                {hero?.subheading || DEFAULT_SUBHEADING}
-              </p>
-            </Reveal>
-          </div>
-        </div>
+      <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/40 to-black/10" />
 
-        <Reveal
-          delay={0.1}
-          className="mt-16 grid gap-8 border-t border-gray-200 md:grid-cols-[3fr_1px_1fr] md:items-stretch"
+      <Container className="relative flex h-full flex-col justify-end pb-16 md:pb-20">
+        <span className="mb-4 text-xs font-medium tracking-[0.3em] text-gray-300 uppercase">
+          Photojournalist &amp; Documentary Photographer
+        </span>
+
+        <TypewriterHeading
+          as="h1"
+          className="max-w-3xl font-serif text-4xl leading-tight text-white sm:text-5xl md:text-6xl"
         >
-          <div className="group relative mt-8 aspect-[16/9] w-full overflow-hidden bg-gray-200">
-            <ImageSlider
-              images={heroImages}
-              width={1200}
-              height={675}
-              sizes="(min-width: 768px) 60vw, 100vw"
-              fallbackAlt="Prabin Kulung Rai photography"
-              fallbackImageUrls={SECONDARY_FALLBACK_IMAGES}
-              className="object-cover transition-transform duration-500 group-hover:scale-105"
-            />
-          </div>
+          {hero?.heading || DEFAULT_HEADING}
+        </TypewriterHeading>
 
-          <div className="hidden bg-gray-200 md:block" />
+        <Reveal delay={0.2} className="mt-6 max-w-xl">
+          <p className="text-sm leading-relaxed text-gray-200 md:text-base">
+            {hero?.subheading || DEFAULT_SUBHEADING}
+          </p>
+        </Reveal>
 
-          <div className="flex flex-nowrap items-center justify-center gap-3">
-            <Link
-              href="/portfolio"
-              className="rounded-none bg-gray-900 px-6 py-3 text-sm font-medium text-white transition-all duration-300 hover:-translate-y-0.5 hover:bg-gray-700 hover:shadow-lg active:translate-y-0 active:scale-95"
-            >
-              {hero?.ctaLabel || DEFAULT_CTA_LABEL}
-            </Link>
-          </div>
+        <Reveal delay={0.35} className="mt-10 border-t border-white/20 pt-6">
+          <Link
+            href="/portfolio"
+            className="bg-white px-6 py-3 text-sm font-medium text-gray-900 transition-all duration-300 hover:-translate-y-0.5 hover:bg-gray-100 hover:shadow-lg active:translate-y-0 active:scale-95"
+          >
+            {hero?.ctaLabel || DEFAULT_CTA_LABEL}
+          </Link>
         </Reveal>
       </Container>
     </section>
